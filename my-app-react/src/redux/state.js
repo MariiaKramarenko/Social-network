@@ -1,8 +1,7 @@
 
 let state = {
 
-  profilePage:{
-
+profilePage:{
     posts:[
       {id:1, message:'Hi! How are you?', likesCount:'0'},
       {id:2, message:'Good day!', likesCount:'10'}
@@ -10,13 +9,13 @@ let state = {
 
     } ,
 
-  dialogsPage:{
- messages: [
+dialogsPage:{
+    messages: [
       { id: 1, message: 'hi' },
       { id: 2, message: 'How is you project?' },
       { id: 3, message: 'Yep' }
     ],
-  dialogs: [
+    dialogs: [
       { id: 1, name: 'Mariya' },
       { id: 2, name: 'Arek' },
       { id: 3, name: 'Valeriy' },
@@ -24,6 +23,15 @@ let state = {
       { id: 5, name: 'Anna' },
       { id: 6, name: 'Ekaterina' }
     ] 
+  },
+
+sideBar:{
+    avatars: [
+     {id: 1, src: 'https://image.flaticon.com/icons/svg/145/145843.svg',  name: 'Vasyl' },
+     {id: 2, src: 'https://image.flaticon.com/icons/svg/145/145847.svg',  name: 'Mariia' },
+     {id: 3, src: 'https://image.flaticon.com/icons/svg/145/145846.svg',  name: 'Arek' },
+     {id: 4, src: 'https://image.flaticon.com/icons/svg/145/145844.svg',  name: 'Ekaterina' }
+  ]
   }
  
 }
