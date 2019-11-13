@@ -1,6 +1,10 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
+import {addPostActionCreator, updateNewPostTextActionCreator} from './../../../redux/state';
+
+
+
 
 const MyPosts = (props) => {
 
@@ -12,13 +16,13 @@ const MyPosts = (props) => {
  let newPostElement = React.createRef();/*реакт,создай ссылку*/
 
  let addPost = () => {/*функция добавления поста на стену*/
-   props.dispatch({type:'ADD-POST'});
+   props.dispatch(addPostActionCreator());
    
  }
 
  let onPostChange = () => {/*устанавливаем обработчик изменения на teaxtarea*/
   let text = newPostElement.current.value;/*получаем значение teaxtareaи записываем*/
-  props.dispatch({type:'UPDATE-NEW-POST-TEXT', newText: text});/*отправляем в bll в state значение которое мы взяли как value из textarea*/
+  props.dispatch(updateNewPostTextActionCreator(text));/*отправляем в bll в state значение которое мы взяли как value из textarea*/
  }
 
 
