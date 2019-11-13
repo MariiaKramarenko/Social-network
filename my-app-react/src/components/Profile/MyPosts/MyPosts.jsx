@@ -11,15 +11,14 @@ const MyPosts = (props) => {
 
  let newPostElement = React.createRef();/*реакт,создай ссылку*/
 
- let addPost = () => {
-   let text = newPostElement.current.value;
-   props.addPost(text);
-   newPostElement.current.value = '';
+ let addPost = () => {/*функция добавления поста на стену*/
+   let text = newPostElement.current.value;/*берем нативное значение textarea и записываем его как переменную text*/
+   props.addPost(text);/*из пропсов достаем прокинутую функцию из стейта и вызываем ее передав ей наш текст из textarea*/
  }
 
- let onPostChange = () =>{
-
-
+ let onPostChange = () => {
+  let text = newPostElement.current.value;
+  props.updateNewPostText(text);/*отправляем в bll в state значение которое мы взяли как value из textarea*/
  }
 
 
