@@ -6,9 +6,11 @@ profilePage:{
     posts:[
       {id:1, message:'Hi! How are you?', likesCount:'0'},
       {id:2, message:'Good day!', likesCount:'10'}
-      ]
+      ],
+    newPostText:'mariia kramarenko'
 
     } ,
+
 
 dialogsPage:{
     messages: [
