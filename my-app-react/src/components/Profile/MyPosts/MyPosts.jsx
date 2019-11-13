@@ -14,10 +14,11 @@ const MyPosts = (props) => {
  let addPost = () => {/*функция добавления поста на стену*/
    let text = newPostElement.current.value;/*берем нативное значение textarea и записываем его как переменную text*/
    props.addPost(text);/*из пропсов достаем прокинутую функцию из стейта и вызываем ее передав ей наш текст из textarea*/
+   props.updateNewPostText(" ");
  }
 
- let onPostChange = () => {
-  let text = newPostElement.current.value;
+ let onPostChange = () => {/*устанавливаем обработчик изменения на teaxtarea*/
+  let text = newPostElement.current.value;/*получаем значение teaxtareaи записываем*/
   props.updateNewPostText(text);/*отправляем в bll в state значение которое мы взяли как value из textarea*/
  }
 
