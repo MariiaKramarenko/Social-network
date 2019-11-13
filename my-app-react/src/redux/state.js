@@ -35,14 +35,15 @@ sideBar:{
  
 }
 
-export let addPost = (postMessage) => {/*сюда приходит значени value от textarea обозначенное переменной text*/
-    let newPost = {/*там в MyPosts мы вызываем эту функцию и передаем ей этот text - props.addPost(text);*/
+export let addPost = () => {
+    let newPost = {
       id:5,
-      message: postMessage,
+      message: state.profilePage.newPostText,/*спрашиваем у стейта значение введенное нами*/
       likesCount: 0
-    };/*сюда этот text приходит названный как postMessage , и запихивается как соообщение для newPost */
+    };/*сюда это запихивается как соообщение для newPost */
 
    state.profilePage.posts.push(newPost);/* затем, полученный нами newPost  мы пушим в конец массива с постами*/
+   state.profilePage.newPostText = ' ';/*занулим строку*/
    rerenderEntireTree(state);/*и обновляем наш state чтобы отрисовать все после изменения*/
 }
 
@@ -50,7 +51,8 @@ export let addPost = (postMessage) => {/*сюда приходит значен�
 export let updateNewPostText = (newText) => {/*сюда приходит значение text из textarea которое мы передали в функцию onChange*/
    state.profilePage.newPostText = newText;/*ут text становится newText и записывается в state*/
    rerenderEntireTree(state);/*дерево перерисовывется с новым уже значением и мы видим его при вводе*/
-}
+
+ }
 
 
 export default state;

@@ -12,9 +12,8 @@ const MyPosts = (props) => {
  let newPostElement = React.createRef();/*реакт,создай ссылку*/
 
  let addPost = () => {/*функция добавления поста на стену*/
-   let text = newPostElement.current.value;/*берем нативное значение textarea и записываем его как переменную text*/
-   props.addPost(text);/*из пропсов достаем прокинутую функцию из стейта и вызываем ее передав ей наш текст из textarea*/
-   props.updateNewPostText(" ");
+   props.addPost();
+   
  }
 
  let onPostChange = () => {/*устанавливаем обработчик изменения на teaxtarea*/
