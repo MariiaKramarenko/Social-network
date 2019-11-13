@@ -1,4 +1,6 @@
-import {rerenderEntireTree} from './../render.js';
+let rerenderEntireTree = () =>{
+  console.log('hello');
+}
 
 let state = {
 
@@ -35,7 +37,7 @@ sideBar:{
  
 }
 
-export let addPost = () => {
+export const addPost = () => {
     let newPost = {
       id:5,
       message: state.profilePage.newPostText,/*спрашиваем у стейта значение введенное нами*/
@@ -48,11 +50,14 @@ export let addPost = () => {
 }
 
 
-export let updateNewPostText = (newText) => {/*сюда приходит значение text из textarea которое мы передали в функцию onChange*/
+export const updateNewPostText = (newText) => {/*сюда приходит значение text из textarea которое мы передали в функцию onChange*/
    state.profilePage.newPostText = newText;/*ут text становится newText и записывается в state*/
    rerenderEntireTree(state);/*дерево перерисовывется с новым уже значением и мы видим его при вводе*/
 
  }
 
+export const subscribe = (observer) => {/*коллбеком передадим сюда нужную нам rerenderEntireTree*/
+  rerenderEntireTree = observer;/*и передаем нашему обсерверу наш нужный здесь rerenderEntireTree*/
+}
 
 export default state;
