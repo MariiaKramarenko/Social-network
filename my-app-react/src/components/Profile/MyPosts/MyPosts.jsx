@@ -12,13 +12,13 @@ const MyPosts = (props) => {
  let newPostElement = React.createRef();/*реакт,создай ссылку*/
 
  let addPost = () => {/*функция добавления поста на стену*/
-   props.addPost();
+   props.dispatch({type:'ADD-POST'});
    
  }
 
  let onPostChange = () => {/*устанавливаем обработчик изменения на teaxtarea*/
   let text = newPostElement.current.value;/*получаем значение teaxtareaи записываем*/
-  props.updateNewPostText(text);/*отправляем в bll в state значение которое мы взяли как value из textarea*/
+  props.dispatch({type:'UPDATE-NEW-POST-TEXT', newText: text});/*отправляем в bll в state значение которое мы взяли как value из textarea*/
  }
 
 

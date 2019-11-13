@@ -41,8 +41,15 @@ _callSubscriber(){
   console.log('hello');
 },
 
- addPost(){
-    let newPost = {/*обычная переменная внутри метода */
+
+subscribe(observer){/*коллбеком передадим сюда нужную нам rerenderEntireTree*/
+  this._callSubscriber = observer;/*и передаем нашему обсерверу наш нужный здесь rerenderEntireTree*/
+},
+
+
+dispatch(action){
+  if (action.type === 'ADD-POST'){
+      let newPost = {/*обычная переменная внутри метода */
       id:5,
       message: this._state.profilePage.newPostText,/*спрашиваем у стейта значение введенное нами*/
       likesCount: 0
@@ -51,16 +58,18 @@ _callSubscriber(){
    this._state.profilePage.posts.push(newPost);/* затем, полученный нами newPost  мы пушим в конец массива с постами*/
    this._state.profilePage.newPostText = ' ';/*занулим строку*/
    this._callSubscriber(this._state);/*и обновляем наш state чтобы отрисовать все после изменения*/
-},
-
-updateNewPostText(newText){/*сюда приходит значение text из textarea которое мы передали в функцию onChange*/
-   this._state.profilePage.newPostText = newText;/*ут text становится newText и записывается в state*/
-   this._callSubscriber(this._state);/*дерево перерисовывется с новым уже значением и мы видим его при вводе*/
-},
-
-subscribe(observer){/*коллбеком передадим сюда нужную нам rerenderEntireTree*/
-  this._callSubscriber = observer;/*и передаем нашему обсерверу наш нужный здесь rerenderEntireTree*/
+  } else if
+       (action.type === 'UPDATE-NEW-POST-TEXT'){
+          this._state.profilePage.newPostText = action.newText;/*ут text становится newText и записывается в state*/
+          this._callSubscriber(this._state);/*дерево перерисовывется с новым уже значением и мы видим его при вводе*/
+  }
 }
+
+
+
+
+
+
 
 }
 
