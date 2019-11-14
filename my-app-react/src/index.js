@@ -11,7 +11,8 @@ import './index.css';
 let rerenderEntireTree = (state) => {
 	ReactDOM.render(<App 
 	state={state} 
-	dispatch={store.dispatch.bind(store)} />, document.getElementById('root'));
+	dispatch={store.dispatch.bind(store)} 
+	store={store} />, document.getElementById('root'));
 }
 
 rerenderEntireTree(store.getState());/*здесь нам не нужен bind() потомучто мы сразу вызываем от имени store за счет постановки скобок()*/
