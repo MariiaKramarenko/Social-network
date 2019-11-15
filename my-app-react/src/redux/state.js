@@ -1,11 +1,11 @@
-import profileReducer from "./profile-reducer.js";
+import profileReducer from "./profile-reducer.js";/*импортируем редьюсеры*/
 import dialogsReducer from "./dialogs-reducer.js";
 import sidebarReducer from "./sidebar-reducer.js";
 
 
-let store = {
+let store = {/*стор-наш собственно созданный стор,еще не редакс*/
 
-_state: {
+_state: {/*приватное свойство так как _ и мы не можем обратиться к нему снаружи*/
   profilePage: {
     posts:[
       {id:1, message:'Hi! How are you?', likesCount:'0'},
@@ -28,10 +28,10 @@ _state: {
       { id: 6, name: 'Ekaterina' }
     ],
 
-    newMessageBody:" "
+    newMessageBody:" "/*место,куда мы записываем новое значение вводимое нами в текстареа как сообщение*/
      },
 
-  sideBar:{
+  sideBar:{/*вывод статичных друзей в сайдбаре*/
     avatars: [
      {id: 1, src: 'https://image.flaticon.com/icons/svg/145/145843.svg',  name: 'Vasyl' },
      {id: 2, src: 'https://image.flaticon.com/icons/svg/145/145847.svg',  name: 'Mariia' },
@@ -40,28 +40,28 @@ _state: {
   }
 },
 
-getState(){
+getState(){/*метод гетстейт получающий стейт и возвращающий его путем обращения к приватному стейту*/
  return this._state;
 },
 
 
-_callSubscriber(){
+_callSubscriber(){/*приватный метод, которому мы передали rerender нашего приложения из метода ниже*/
   console.log('hello');
 },
 
 
-subscribe (observer) {/*коллбеком передадим сюда нужную нам rerenderEntireTree*/
+subscribe (observer) {/*метод, коллбеком передадим сюда нужную нам rerenderEntireTree из index.js и назовем ее observer здесь(название здесь не имеет для нас значения)*/
   this._callSubscriber = observer;/*и передаем нашему обсерверу наш нужный здесь rerenderEntireTree*/
 },
 
 
-dispatch (action) {
+dispatch (action) {/*метод диспач-метод с пом которго мы обращаемся к state и производим манипуляции с ним*/
 
-  this._state.profilePage = profileReducer(this._state.profilePage, action);/*отдаем этому редьюсеру конкретно то что ему нужно и перезаписыааем текущее значение state через возвращаемое значение*/
-  this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
-  this._state.sideBar = sidebarReducer(this._state.sideBar, action);
+  this._state.profilePage = profileReducer(this._state.profilePage, action);/*отдаем редьюсеру для профайла  конкретно то что ему нужно и перезаписыааем текущее значение state через возвращаемое значение*/
+  this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);/*редьюсер для лдиалогов*/
+  this._state.sideBar = sidebarReducer(this._state.sideBar, action);/*редьюсер для сайдбара*/
 
-  this._callSubscriber(this._state);
+  this._callSubscriber(this._state);/*вызываем субскрайбер метод(в нем ререндер) берем его устейта так как он приватный*/
   }
 
 }
@@ -69,5 +69,5 @@ dispatch (action) {
 
 
 
-export default store;
+export default store;/*экспорт по умолчанию*/
 

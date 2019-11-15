@@ -3,29 +3,29 @@ const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
 
 
-const profileReducer = (state, action) =>{
-	switch(action.type){
-     case ADD_POST:
-         let newPost = {
+const profileReducer = (state, action) =>{/*редьюсер для страницы профайл-он возвращает измененный стейт */
+	switch(action.type){/*исп. свич вмето if else - ставим по какому кейсу будем свитчить*/
+     case ADD_POST:/*если action.type === ADD_POST то */
+         let newPost = {/*формируем новый пост*/
           id:5,
-          message: state.newPostText,
+          message: state.newPostText,/*засовываем сюда значение нового поста введенное нами*/
           likesCount: 0
     };
-      state.posts.push(newPost);
-      state.newPostText = ' ';
-      return state;
-   case UPDATE_NEW_POST_TEXT:
+      state.posts.push(newPost);/*пуим(вставляем в конец массива с постами, кот нах. в state) новый пост */
+      state.newPostText = ' ';/*зануляем строку ввода после добавления поста*/
+      return state;/*ретурним стейт так как кейсы "проваливаются" и им нужна как бы точка-закрепление (почитать про switch)*/
+   case UPDATE_NEW_POST_TEXT:/*если action.type === UPDATE_NEW_POST_TEXT то записываем в значение нового поста введенный текст пользователм*/
           state.newPostText = action.newText;        
-          return state;
-          default:
+          return state;/*ретурним стейт чтобы не "проваливался" кейс*/
+          default:/*обязательное значение по дефолту для switch*/
           return state;
 }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST})
+export const addPostActionCreator = () => ({type: ADD_POST})/*экшнкриейтор кот возвращает тип экшена ADD_POST*/
 
-export const updateNewPostTextActionCreator = (text) =>
-({type: UPDATE_NEW_POST_TEXT, newText:text})
+export const updateNewPostTextActionCreator = (text) =>/*экшнкриейтор принимающий в агрумент текст вводимый пользователм*/
+({type: UPDATE_NEW_POST_TEXT, newText:text})/*принимает значение экшн тип UPDATE_NEW_POST_TEXT и записывает текст как новый текст поста*/
 
 
 export default profileReducer;
