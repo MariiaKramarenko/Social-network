@@ -1,7 +1,12 @@
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+import profileReducer from "./profile-reducer.js";
+import dialogsReducer from "./dialogs-reducer.js";
+import sidebarReducer from "./sidebar-reducer.js";
+
+
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
 
 let store = {
@@ -51,42 +56,20 @@ _callSubscriber(){
 },
 
 
-subscribe(observer){/*коллбеком передадим сюда нужную нам rerenderEntireTree*/
+subscribe (observer) {/*коллбеком передадим сюда нужную нам rerenderEntireTree*/
   this._callSubscriber = observer;/*и передаем нашему обсерверу наш нужный здесь rerenderEntireTree*/
 },
 
 
-dispatch(action){
-  if 
-    (action.type === ADD_POST){
-      let newPost = {/*обычная переменная внутри метода */
-      id:5,
-      message: this._state.profilePage.newPostText,/*спрашиваем у стейта значение введенное нами*/
-      likesCount: 0
-    };/*сюда это запихивается как соообщение для newPost */
+dispatch (action) {
 
-   this._state.profilePage.posts.push(newPost);/* затем, полученный нами newPost  мы пушим в конец массива с постами*/
-   this._state.profilePage.newPostText = ' ';/*занулим строку*/
-   this._callSubscriber(this._state);/*и обновляем наш state чтобы отрисовать все после изменения*/
+  this._state.profilePage = profileReducer(this._state.profilePage, action);/*отдаем этому редьюсеру конкретно то что ему нужно и перезаписыааем текущее значение state через возвращаемое значение*/
+  this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+  this._state.sideBar = sidebarReducer(this._state.sideBar, action);
+
+  this._callSubscriber(this._state);
   }
-   else if
-       (action.type === UPDATE_NEW_POST_TEXT){
-          this._state.profilePage.newPostText = action.newText;/*ут text становится newText и записывается в state*/
-          this._callSubscriber(this._state);/*дерево перерисовывется с новым уже значением и мы видим его при вводе*/
-  } else if 
-       (action.type === UPDATE_NEW_MESSAGE_BODY){
-          this._state.dialogsPage.newMessageBody = action.body;
-          this._callSubscriber(this._state);
-  } else if 
-       (action.type === SEND_MESSAGE) {
-          let body = this._state.dialogsPage.newMessageBody;
-          this._state.dialogsPage.newMessageBody='';
-          this._state.dialogsPage.messages.push({id:4, message: body});
-          this._callSubscriber(this._state);
 
-
-  }
-}
 }
 
 export const addPostActionCreator = () => ({type: ADD_POST})
