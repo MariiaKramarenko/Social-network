@@ -1,9 +1,18 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
+let initialState = {/*инициализируемый стейт-то есть тот что передается при входе*/
+    posts:[
+      {id:1, message:'Hi! How are you?', likesCount:'0'},
+      {id:2, message:'Good day!', likesCount:'10'}
+      ],
+    newPostText:'mariia kramarenko'
+};
 
 
-const profileReducer = (state, action) =>{/*редьюсер для страницы профайл-он возвращает измененный стейт */
+
+const profileReducer = (state = initialState , action) =>{/*передаем стейту его значение начальное!*/
+  /*редьюсер для страницы профайл-он возвращает измененный стейт */
 	switch(action.type){/*исп. свич вмето if else - ставим по какому кейсу будем свитчить*/
      case ADD_POST:/*если action.type === ADD_POST то */
          let newPost = {/*формируем новый пост*/

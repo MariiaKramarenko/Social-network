@@ -1,9 +1,26 @@
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
+let initialState = {
+    messages: [
+      { id: 1, message: 'hi' },
+      { id: 2, message: 'How is you project?' },
+      { id: 3, message: 'Yep' }
+    ],
+    dialogs: [
+      { id: 1, name: 'Mariya' },
+      { id: 2, name: 'Arek' },
+      { id: 3, name: 'Valeriy' },
+      { id: 4, name: 'Kostiantym' },
+      { id: 5, name: 'Anna' },
+      { id: 6, name: 'Ekaterina' }
+    ],
 
+    newMessageBody:" "/*место,куда мы записываем новое значение вводимое нами в текстареа как сообщение*/
+};
 
-const dialogsReducer = (state, action) => {/*редьюсер для диалогов, возвращает измененный стейт*/
+const dialogsReducer = (state = initialState, action) => {/*передаем стейту его значение начальное!*/
+  /*редьюсер для диалогов, возвращает измененный стейт*/
 	switch(action.type){/*свич-условие по кейсу action.type*/
 		case UPDATE_NEW_MESSAGE_BODY:/*если action.type === UPDATE_NEW_MESSAGE_BODY то*/
             state.newMessageBody = action.body;/*берем из стейта место для сообщения введеного пользователем и засовываем в него сообщение body которое пришло нам в экшене через экшнкриейтор*/
