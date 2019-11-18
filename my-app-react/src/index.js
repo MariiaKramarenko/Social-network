@@ -5,14 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/redux-store';
 import './index.css';
-
+import StoreContext, {Provider} from './StoreContext';/*импортируем компоненту контекста вызова*/
 
 
 let rerenderEntireTree = (state) => {
-	ReactDOM.render(<App 
-	state={state} 
-	dispatch={store.dispatch.bind(store)} 
-	store={store} />, document.getElementById('root'));
+	ReactDOM.render(
+    <Provider store={store}>
+	<App state={state} dispatch={store.dispatch.bind(store)} store={store} 
+	/>
+    </Provider>
+	, document.getElementById('root'));
 }
 
 rerenderEntireTree(store.getState());/*здесь нам не нужен bind() потомучто мы сразу вызываем от имени store за счет постановки скобок()*/
