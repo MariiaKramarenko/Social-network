@@ -1,8 +1,6 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {addPostActionCreator, updateNewPostTextActionCreator} from './../../../redux/profile-reducer';
-/*импортируем экшнкриейторы так как тут мы через них обращаемся к стейту и выполняем действия*/
 
 
 
@@ -16,16 +14,14 @@ const MyPosts = (props) => {/*константа майпост принимае
 
  let newPostElement = React.createRef();/*реакт,создай ссылку*/
 
- let addPost = () => {/*функция добавления поста на стену*/
-   props.dispatch(addPostActionCreator());/*вызываем экшнкриейтер так как в нем лежит условие и доступ к стейту*/
+ let onAddPost = () => {/*функция добавления поста на стену*/
+   props.addPost();
    
  }
 
  let onPostChange = () => {/*устанавливаем обработчик изменения на teaxtarea*/
   let text = newPostElement.current.value;/*получаем значение teaxtareaи записываем*/
-  props.dispatch(updateNewPostTextActionCreator(text));/*отправляем  в state значение которое мы взяли как value из textarea
-   с помощью экшнкриейтера так как в нем лежит и условие для выполнения 
-   и сам доступ к стейту и сами действия для добавления поста*/
+  props.updateNewPostText(text);
  }
 
 
@@ -42,7 +38,7 @@ const MyPosts = (props) => {/*константа майпост принимае
           </div>
 
           <div>
-              <button onClick ={ addPost } className={s.addpost}>Add post</button>
+              <button onClick ={ onAddPost } className={s.addpost}>Add post</button>
           </div>
           {postsElements}
       </div>
