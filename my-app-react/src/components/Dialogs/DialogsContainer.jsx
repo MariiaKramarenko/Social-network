@@ -5,31 +5,43 @@ import Message from './Message/Message';
 import DialogItem from './DialogItem/DiialogItem';
 import {sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
-import StoreContext from './../../../src/StoreContext';
+import {connect} from 'react-redux';
 
-
-
-const DialogsContainer = () => {/*константа отвечающая за отрисовку диалогов*/
-
-	return <StoreContext.Consumer> 
-    {(store) => {/*!!!!!!!!!Фигурная скобка обязательно должна стоять на новой строке!!!!!!!!!!!!!!!*/
-     /*StoreContext.Consumer - потребитель контекста*/ 
-    let state = store.getState().dialogsPage;
-    let newMessageElement = React.createRef();/*создаем ссылку которая ссылается на текстареа*/
-   
-    let onSendMessageClick =(text) =>{/*передаем text из Dialogs.jsx*/
-    store.dispatch(sendMessageCreator(text));/*вызываем меседжкриейтор - то есть делаем эту компоненту функциональной*/
-    }
-
-    let onNewMessageChange =(body)=>{/*передаем body из Dialogs.jsx - логику оставляем здесь а компонента Dialogs.jsx становится презентационной*/
-     store.dispatch(updateNewMessageBodyCreator(body));/*вызываем экшкриейтор и передаем ему сообщение,там оно проходитусловия и происходит отрисовка соощения*/
-    }
-    return <Dialogs updateNewMessageBody = {onNewMessageChange} sendMessage={onSendMessageClick}  dialogsPage={state} />
-		}
-     }
-     </StoreContext.Consumer>  
- 
-        
+/*этими двумя функциями мы настраиваем наш connect */
+let mapStateToProps =(state)=>{/* тут присваиваем свойства ,цель-превратить часть стейта в пропсы для компоненты*/
+   return {
+      dialogsPage: state.dialogsPage
+   }
 }
+
+let mapDispatchToProps = (dispatch) => {/*тут передадим коллбеки коллбеки*/
+    return {
+       updateNewMessageBody: (body) => { 
+        dispatch(sendMessageCreator(body));
+        
+    } ,
+       sendMessage:(body) => {
+        dispatch(updateNewMessageBodyCreator(body));
+    } 
+
+    }
+}
+
+/*connect-возвращает нам новую контейнерную компоненту*/
+const DialogsContainer = connect (mapStateToProps,mapDispatchToProps) (Dialogs);/*вызываем функцию два раза она создает контейнерную компоненту 
+и внутри вызывает переданную ей во вторых скобках-презентационную*/
+/*библиотека connect вернет нам в этом случае функциональную компоненту для нашей презентационной Dialogs
+то есть нам уже не нужно создавать контейнерные компоненты вручную,за нас это сделает connect
+
+первым вызовом этой функции мы кк бы настраиваем нашу контейнерную компоненту
+
+внутырь презентационной компоненты в качестве пропсов будут переданы f1 f2 
+и соответсвенно свойства которые  сидят в этих объектах
+*/
+
+
+
+
+
 
 export default DialogsContainer;

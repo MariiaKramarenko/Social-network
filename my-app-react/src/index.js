@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/redux-store';
 import './index.css';
-import StoreContext, {Provider} from './StoreContext';/*импортируем компоненту контекста вызова*/
+import {Provider} from 'react-redux';
 
 
 let rerenderEntireTree = (state) => {

@@ -3,38 +3,35 @@ import {addPostActionCreator, updateNewPostTextActionCreator} from './../../../r
 /*импортируем экшнкриейторы так как тут мы через них обращаемся к стейту и выполняем действия*/
 import MyPosts from './MyPosts';
 import Post from './Post/Post';
-import StoreContext from './../../../StoreContext';
-
-const MyPostsContainer = (props) => {/*константа майпост принимает в пропсы state*/
- 
-
-  return <StoreContext.Consumer> 
-      {(store) => {/* мы передали сюда контекстом стор - то есть вызываем функцию со стором и она вызывает уже jsx*/
-/*переносим сюда все функции чтобы они могли достучаться до стора из контекста*/
-let state = store.getState();
+import {connect} from 'react-redux';
 
 
- let addPost = () => {/*функция добавления поста на стену*/
-   store.dispatch(addPostActionCreator());/*вызываем экшнкриейтер так как в нем лежит условие и доступ к стейту*/
-   
- }
-
- let onPostChange = (text) => {/*удовлетворяем нужну презентационной компненты-выполяем логику колллбеком сздесь,тут каксаемся стора тольков этой компоненте*/
-  let action = updateNewPostTextActionCreator(text);
-  store.dispatch(action);/*знания о сторе мы вынесли в контейнерную компоненту*/
- }
-
-     return <MyPosts 
-          updateNewPostText={onPostChange}  
-          addPost={addPost} 
-          posts={state.profilePage.posts}
-          newPostText = {state.profilePage.newPostText } /> 
-        } 
-      }
-
-    </StoreContext.Consumer>  
-  	 
-
+let mapStateToProps = (state) => {
+  return {
+    posts: state.profilePage.posts,
+    newPostText: state.profilePage.newPostText
+    }
 }
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+
+    updateNewPostText:(text) => {
+      let action = updateNewPostTextActionCreator(text);
+      dispatch(action);/*знания о сторе мы вынесли в контейнерную компоненту*/
+    },
+
+    addPost: () => {
+      dispatch(addPostActionCreator());
+    }
+    
+    }
+}
+
+
+const MyPostsContainer = connect (mapStateToProps, mapDispatchToProps) (MyPosts);
+
+
+
 
 export default MyPostsContainer;
