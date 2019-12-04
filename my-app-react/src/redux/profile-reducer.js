@@ -12,26 +12,25 @@ let initialState = {/*инициализируемый стейт-то есть 
 
 
 const profileReducer = (state = initialState , action) =>{/*передаем стейту его значение начальное!*/
-  /*редьюсер для страницы профайл-он возвращает измененный стейт */
-	switch(action.type){/*исп. свич вмето if else - ставим по какому кейсу будем свитчить*/
-     case ADD_POST:/*если action.type === ADD_POST то */
-         let newPost = {/*формируем новый пост*/
+	switch(action.type){
+
+     case ADD_POST:
+         let newPost = {
           id:5,
-          message: state.newPostText,/*засовываем сюда значение нового поста введенное нами*/
-          likesCount: 0
-    };
-      let stateCopy = {...state};/*создаем копию объекта */
-      stateCopy.posts = [...state.posts];/*делаем копию массива постов */
-      stateCopy.posts.push(newPost);/*пушим в копию объекта новый пост */     
-      stateCopy.newPostText = ' ';/*зануляем строку ввода после добавления поста в копии объекта*/
-      return stateCopy;/*ретурним стейт копию так как кейсы "проваливаются" и им нужна как бы точка-закрепление (почитать про switch)*/
-   
-   case UPDATE_NEW_POST_TEXT:{/*если action.type === UPDATE_NEW_POST_TEXT то записываем в значение нового поста введенный текст пользователм*/
-          let stateCopy = {...state};/*создаем копию объекта */
-          stateCopy.newPostText = action.newText;  /*образаемся к новому посту в копии и записываем из экшена*/      
-          return stateCopy;/*ретурним стейт копию чтобы не "проваливался" кейс*/
-          }
-          default:/*обязательное значение по дефолту для switch*/
+          message: state.newPostText,
+          likesCount: 0};
+
+      return {...state, 
+        newPostText: ' ',
+        posts: [...state.posts, newPost]};
+       
+     case UPDATE_NEW_POST_TEXT:
+          return {...state, 
+            newPostText: action.newText
+          };
+            
+          
+          default:
           return state;
 }
 }
