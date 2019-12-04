@@ -16,11 +16,11 @@ let mapStateToProps =(state)=>{/* тут присваиваем свойства
 
 let mapDispatchToProps = (dispatch) => {/*тут передадим коллбеки коллбеки*/
     return {
-       updateNewMessageBody: (body) => { 
+       sendMessage: (body) => { 
         dispatch(sendMessageCreator(body));
         
     } ,
-       sendMessage:(body) => {
+       updateNewMessageBody:(body) => {
         dispatch(updateNewMessageBodyCreator(body));
     } 
 
