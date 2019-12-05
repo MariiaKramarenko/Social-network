@@ -4,6 +4,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
+import Users from './components/Users/Users';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import {BrowserRouter, Route} from 'react-router-dom';
 
@@ -15,12 +16,12 @@ const App = (props) => {
       <Header />
       <Navbar state={props.state.sideBar} />
       <div className="app-wrapper-content">
-        <Route path='/profile' render={ () => 
-          <Profile />} />
+        <Route path='/profile' render={ () =>  <Profile />} />
 
-        <Route path='/dialogs' render={ () =>
+        <Route path='/dialogs' render={ () =>  <DialogsContainer />} />
+        
+        <Route path='/users' render={ () => <Users />} />
 
-         <DialogsContainer />} />
       </div>
     </div>
     </BrowserRouter>
