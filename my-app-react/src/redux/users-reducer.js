@@ -1,12 +1,15 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
+const SET_USERS = 'SET_USERS';
+
+
 
 let initialState = {
 	users: [
-      {id:1, followed: false, fullName:'Olga A.', status: 'I`m a mom', location: {city:'Florence', contry:'Italy'} },
-      {id:2, followed: true, fullName:'Mariia K.', status: 'I`m a daugther', location: {city:'Warsaw', contry:'Poland'} },
-      {id:3, followed: false, fullName:'Dmitry G.', status: 'I`m a friend', location: {city:'Kyiv', contry:'Ukraine'} },
-      {id:4, followed: true, fullName:'Viki B.', status: 'I`m a friend', location: {city:'Kyiv', contry:'Ukraine'} }
+      {id:1, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Dmitry_Nagiev_2017_4.jpg', followed: false, fullName:'Olga A.', status: 'I`m a mom', location: {city:'Florence', contry:'Italy'} },
+      {id:2, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Dmitry_Nagiev_2017_4.jpg', followed: true, fullName:'Mariia K.', status: 'I`m a daugther', location: {city:'Warsaw', contry:'Poland'} },
+      {id:3, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Dmitry_Nagiev_2017_4.jpg', followed: false, fullName:'Dmitry G.', status: 'I`m a friend', location: {city:'Kyiv', contry:'Ukraine'} },
+      {id:4, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Dmitry_Nagiev_2017_4.jpg', followed: true, fullName:'Viki B.', status: 'I`m a friend', location: {city:'Kyiv', contry:'Ukraine'} }
 	]
 }
 
@@ -37,16 +40,23 @@ const usersReducer = (state = initialState, action) =>{
 		   	 })
 		   	  }
 
+		case SET_USERS: /*устанавливаем пользователей*/
+		return{
+			...state,/*берем старый стейт делаем копию*/
+			users: [...state, ...action.users] 
+			/*берем старых пользователей и меняем их на новых тех,кот пришли из экшена -добавляем в конец*/
+		}
+
 		default:
 		return state;
 	}
 }
 
 
-export const followActionCreator = (userID) => ({ type: FOLLOW, userID })/*экшнкриейтор для добавления в друзья пользователя*/
+export const followActionCreator = (userID) => ( { type: FOLLOW, userID } )/*экшнкриейтор для добавления в друзья пользователя*/
 /*userID нам нужен чобы знать,какого именно пользователя нам нужно добавить/удалить*/
-export const unfollowActionCreator = (userID) => ({ type: UNFOLLOW, userID })/*экшнкриейтор для удаления из друзей пользователя*/
-
+export const unfollowActionCreator = (userID) => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
+export const setUsersActionCreator = (users) =>( {type: SET_USERS, users} )/*экшн установления юзеров*/
 
 
 
