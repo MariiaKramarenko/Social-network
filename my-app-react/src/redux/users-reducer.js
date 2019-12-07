@@ -5,15 +5,11 @@ const SET_USERS = 'SET_USERS';
 
 
 let initialState = {
-	users: [
-      {id:1, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Dmitry_Nagiev_2017_4.jpg', followed: false, fullName:'Olga A.', status: 'I`m a mom', location: {city:'Florence', contry:'Italy'} },
-      {id:2, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Dmitry_Nagiev_2017_4.jpg', followed: true, fullName:'Mariia K.', status: 'I`m a daugther', location: {city:'Warsaw', contry:'Poland'} },
-      {id:3, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Dmitry_Nagiev_2017_4.jpg', followed: false, fullName:'Dmitry G.', status: 'I`m a friend', location: {city:'Kyiv', contry:'Ukraine'} },
-      {id:4, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Dmitry_Nagiev_2017_4.jpg', followed: true, fullName:'Viki B.', status: 'I`m a friend', location: {city:'Kyiv', contry:'Ukraine'} }
-	]
+	users: []
 }
 
-const usersReducer = (state = initialState, action) =>{
+const usersReducer = (state = initialState, action) => 
+{
 	switch (action.type){
 		case FOLLOW : 
 		   return {/*делаем копию стейта для наших с ним преобразований*/
@@ -41,9 +37,7 @@ const usersReducer = (state = initialState, action) =>{
 		   	  }
 
 		case SET_USERS: /*устанавливаем пользователей*/
-		return{
-			...state,/*берем старый стейт делаем копию*/
-			users: [...state, ...action.users] 
+		return {...state, users: [...state.users, ...action.users] 
 			/*берем старых пользователей и меняем их на новых тех,кот пришли из экшена -добавляем в конец*/
 		}
 
