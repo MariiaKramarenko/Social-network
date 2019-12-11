@@ -1,11 +1,14 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
-
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 
 
 let initialState = {
-	users: []
+	users: [],
+	pageSize: 5,
+	totalUsersCount: 21,
+	currentPage:1
 }
 
 const usersReducer = (state = initialState, action) => 
@@ -36,10 +39,19 @@ const usersReducer = (state = initialState, action) =>
 		   	 })
 		   	  }
 
+
+
 		case SET_USERS: /*устанавливаем пользователей*/
 		return {...state, users: [...state.users, ...action.users] 
 			/*берем старых пользователей и меняем их на новых тех,кот пришли из экшена -добавляем в конец*/
 		}
+
+
+        case SET_CURRENT_PAGE: 
+          return {...state, currentPage: action.currentPage
+          }
+
+
 
 		default:
 		return state;
@@ -51,7 +63,7 @@ export const followActionCreator = (userID) => ( { type: FOLLOW, userID } )/*э�
 /*userID нам нужен чобы знать,какого именно пользователя нам нужно добавить/удалить*/
 export const unfollowActionCreator = (userID) => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
 export const setUsersActionCreator = (users) =>( {type: SET_USERS, users} )/*экшн установления юзеров*/
-
+export const setCurrentPageActionCreator = (currentPage) => ( {type:SET_CURRENT_PAGE, currentPage } )/*экшн кот меняет странички*/
 
 
 
