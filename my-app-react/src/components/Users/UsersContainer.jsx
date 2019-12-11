@@ -1,7 +1,7 @@
 import React from 'react';
 import Users from './Users';
 import {connect} from 'react-redux';
-import {followActionCreator, unfollowActionCreator, setUsersActionCreator,setCurrentPageActionCreator} from '../../redux/users-reducer';
+import {followActionCreator, unfollowActionCreator, setUsersActionCreator,setCurrentPageActionCreator, setTotalUsersCountActionCreator} from '../../redux/users-reducer';
 
 let mapStateToProps = (state) => {/*функция принимает весь глобальный state и возвращает объект только стеми данными которые нам реально нужны */
     return {
@@ -28,6 +28,9 @@ let mapDispatchToProps = (dispatch) =>{/*передает коллбеки до�
     	},
         setCurrentPage: (pageNumber) => {
             dispatch(setCurrentPageActionCreator(pageNumber));
+        },
+        setTotalUsersCount: (totalCount) => {
+            dispatch(setTotalUsersCountActionCreator(totalCount));
         }
     }
 }

@@ -10,16 +10,17 @@ class Users extends React.Component {
 
     componentDidMount() {
        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}& count=${this.props.pageSize}`).then(response=> {/*в response приходит ответ от сервера */
-      this.props.setUsers(response.data.items)/*смотри через дебаг что приходит в респонс и оотуда вытягиваем-а теперь мы их берем этих юзеров с сервера и сетаем(вставляем) в наш стейт!!*/
+      this.props.setUsers(response.data.items);/*смотри через дебаг что приходит в респонс и оотуда вытягиваем-а теперь мы их берем этих юзеров с сервера и сетаем(вставляем) в наш стейт!!*/
+      this.props.setTotalUsersCount(response.data.totalCount);
     });/*data.items-это наши юзеры*/
     
     }
 
 
 
-    onPageChanged = (pageNumber)=> {
+    onPageChanged = (pageNumber)=> {/*брем текущую страницу с сервера*/
       this.props.setCurrentPage(pageNumber);
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}& count=${this.props.pageSize}`).then(response=> {/*в response приходит ответ от сервера */
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}& count=${this.props.pageSize}`).then(response=> {/*в response приходит ответ от сервера */
       this.props.setUsers(response.data.items)});
     }
 
@@ -27,20 +28,20 @@ class Users extends React.Component {
 
 
      render () {
-       let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+       let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);/*округляем до большего числа */
 
-       let pages =[];
-       for ( let i=1; i <= pagesCount; i++) {
+       let pages =[];/*массив со страницами вывода пользователей*/
+       for ( let i=1; i <= pagesCount; i++) {/*итерируемся по пейджкаунту и пушим каждый его результат в массив страниц с пользователями*/
         pages.push(i);
        }
 
 
         return  <div>
         <div>
-        {pages.map(p=> {
+        {pages.map(p=> {/*мапим-выводим результат массива страниц(выводим страницы цифрами)*/
           return (
-          <span className={ this.props.currentPage === p  && s.selectedPage}  
-          onClick={(e)=> { this.onPageChanged(p); } }>{p}</span> 
+          <span className={ this.props.currentPage === p  && s.selectedPage}  /*если текущая страница совпала с одной их тех что пришли в ассиве,то выделяемм ее жирным шрифтом*/
+          onClick={(e)=> { this.onPageChanged(p); } }>{p}</span> /*по клику будем делать переход одной на другую страницы*/
           )
         })}
 
