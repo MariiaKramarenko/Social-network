@@ -1,7 +1,7 @@
 import React from 'react';
 import Users from './Users.jsx';
 import {connect} from 'react-redux';
-import {followActionCreator, unfollowActionCreator, setUsersActionCreator,setCurrentPageActionCreator, setTotalUsersCountActionCreator,toggleIsFetchingActionCreator} from '../../redux/users-reducer';
+import {follow, unfollow, setUsers,setCurrentPage, setTotalUsersCount,toggleIsFetching} from '../../redux/users-reducer';
 import * as axios from 'axios';
 import Preloader from '../common/Preloader/Preloader.jsx';
 
@@ -36,7 +36,7 @@ class UsersContainer extends React.Component {
 
 
     render () {
-   return <> 
+   return <div>
           {this.props.isFetching ? <Preloader /> : null } 
    <Users totalUsersCount={this.props.totalUsersCount} 
                  pageSize={this.props.pageSize}
@@ -46,7 +46,7 @@ class UsersContainer extends React.Component {
                  follow={this.props.follow}
                  unfollow={this.props.unfollow}
                  /> 
-            </>
+            </div>
   }
 }
 
@@ -62,29 +62,36 @@ let mapStateToProps = (state) => {/*функция принимает весь �
 }
 
 
-let mapDispatchToProps = (dispatch) =>{/*передает коллбеки дочерней(презентационной) компоненте Users, она будет их вызывать*/
-    return{
-    	follow: (userID) =>{/*функция диспатчит результат работы экшнкреатора-то есть диспатчим экшн */
-    		dispatch(followActionCreator (userID));
-    	},
-    	unfollow: (userID) =>{/*функция диспатчит результат работы экшнкреатора-то есть диспатчим экшн */
-    		dispatch(unfollowActionCreator  (userID));
-    	},
-    	setUsers: (users) => {
-    		dispatch(setUsersActionCreator(users));
+//let mapDispatchToProps = (dispatch) =>{/*передает коллбеки дочерней(презентационной) компоненте Users, она будет их вызывать*/
+   // return{
+    	//follow: (userID) =>{/*функция диспатчит результат работы экшнкреатора-то есть диспатчим экшн */
+    		//dispatch(followActionCreator (userID));
+    	//},
+    	//unfollow: (userID) =>{/*функция диспатчит результат работы экшнкреатора-то есть диспатчим экшн */
+    	//	dispatch(unfollowActionCreator  (userID));
+    	//},
+    	//setUsers: (users) => {
+    	//	dispatch(setUsersActionCreator(users));
 
-    	},
-        setCurrentPage: (pageNumber) => {
-            dispatch(setCurrentPageActionCreator(pageNumber));
-        },
-        setTotalUsersCount: (totalCount) => {
-            dispatch(setTotalUsersCountActionCreator(totalCount));
-        },
-        toggleIsFetching: (isFetching) => {
-           dispatch(toggleIsFetchingActionCreator(isFetching));
-        }
-    }
-}
+    	//},
+       // setCurrentPage: (pageNumber) => {
+       //     dispatch(setCurrentPageActionCreator(pageNumber));
+       // },
+       // setTotalUsersCount: (totalCount) => {
+        //    dispatch(setTotalUsersCountActionCreator(totalCount));
+       // },
+       // toggleIsFetching: (isFetching) => {
+       //    dispatch(toggleIsFetchingActionCreator(isFetching));
+       // }
+   // }
+//}
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps,{
+        follow:follow,
+        unfollow:unfollow,
+        setUsers: setUsers,
+        setCurrentPage:setCurrentPage,
+        setTotalUsersCount:setTotalUsersCount,
+        toggleIsFetching:toggleIsFetching
+    })(UsersContainer);

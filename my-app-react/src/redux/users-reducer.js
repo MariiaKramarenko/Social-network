@@ -69,12 +69,12 @@ const usersReducer = (state = initialState, action) =>
 }
 
 
-export const followActionCreator = (userID) => ( { type: FOLLOW, userID } )/*экшнкриейтор для добавления в друзья пользователя*/
+export const follow = (userID) => ( { type: FOLLOW, userID } )/*экшнкриейтор для добавления в друзья пользователя*/
 /*userID нам нужен чобы знать,какого именно пользователя нам нужно добавить/удалить*/
-export const unfollowActionCreator = (userID) => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
-export const setUsersActionCreator = (users) =>( {type: SET_USERS, users} )/*экшн установления юзеров*/
-export const setCurrentPageActionCreator = (currentPage) => ( {type:SET_CURRENT_PAGE, currentPage } )/*экшн кот меняет странички*/
-export const setTotalUsersCountActionCreator = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount})
-export const toggleIsFetchingActionCreator = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
+export const unfollow = (userID) => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
+export const setUsers = (users) =>( {type: SET_USERS, users} )/*экшн установления юзеров*/
+export const setCurrentPage = (currentPage) => ( {type:SET_CURRENT_PAGE, currentPage } )/*экшн кот меняет странички*/
+export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount})
+export const toggleIsFetching = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
 
 export default usersReducer;
