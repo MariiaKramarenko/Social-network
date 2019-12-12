@@ -1,7 +1,44 @@
 import React from 'react';
-import Users from './Users';
+import Users from './Users.jsx';
 import {connect} from 'react-redux';
 import {followActionCreator, unfollowActionCreator, setUsersActionCreator,setCurrentPageActionCreator, setTotalUsersCountActionCreator} from '../../redux/users-reducer';
+import * as axios from 'axios';
+
+
+class UsersContainer extends React.Component {
+
+  /*constructor (props) {
+     super(props);} конструктор главной компоненты происходит по умолчанию*/
+
+    componentDidMount() {
+       axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}& count=${this.props.pageSize}`).then(response=> {/*в response приходит ответ от сервера */
+      this.props.setUsers(response.data.items);/*смотри через дебаг что приходит в респонс и оотуда вытягиваем-а теперь мы их берем этих юзеров с сервера и сетаем(вставляем) в наш стейт!!*/
+      this.props.setTotalUsersCount(response.data.totalCount);
+    });/*data.items-это наши юзеры*/
+    
+    }
+
+
+
+    onPageChanged = (pageNumber)=> {/*брем текущую страницу с сервера*/
+      this.props.setCurrentPage(pageNumber);
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}& count=${this.props.pageSize}`).then(response=> {/*в response приходит ответ от сервера */
+      this.props.setUsers(response.data.items)});
+    }
+
+
+
+
+    render () {
+   return <Users totalUsersCount={this.props.totalUsersCount} 
+                 pageSize={this.props.pageSize}
+                 currentPage={this.props.currentPage}
+                 onPageChanged={this.onPageChanged}
+                 users={this.props.users}
+                 follow={this.props.follow}
+                 unfollow={this.props.unfollow}/> 
+  }
+}
 
 let mapStateToProps = (state) => {/*функция принимает весь глобальный state и возвращает объект только стеми данными которые нам реально нужны */
     return {
@@ -36,4 +73,4 @@ let mapDispatchToProps = (dispatch) =>{/*передает коллбеки до�
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
