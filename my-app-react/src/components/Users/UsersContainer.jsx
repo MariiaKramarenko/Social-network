@@ -1,8 +1,10 @@
 import React from 'react';
 import Users from './Users.jsx';
 import {connect} from 'react-redux';
-import {followActionCreator, unfollowActionCreator, setUsersActionCreator,setCurrentPageActionCreator, setTotalUsersCountActionCreator} from '../../redux/users-reducer';
+import {followActionCreator, unfollowActionCreator, setUsersActionCreator,setCurrentPageActionCreator, setTotalUsersCountActionCreator,toggleIsFetchingActionCreator} from '../../redux/users-reducer';
 import * as axios from 'axios';
+import Preloader from '../common/Preloader/Preloader.jsx';
+
 
 
 class UsersContainer extends React.Component {
@@ -11,7 +13,9 @@ class UsersContainer extends React.Component {
      super(props);} конструктор главной компоненты происходит по умолчанию*/
 
     componentDidMount() {
-       axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}& count=${this.props.pageSize}`).then(response=> {/*в response приходит ответ от сервера */
+      this.props.toggleIsFetching(true);
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}& count=${this.props.pageSize}`).then(response=> {/*в response приходит ответ от сервера */
+      this.props.toggleIsFetching(true);/*убираем прелоадер*/
       this.props.setUsers(response.data.items);/*смотри через дебаг что приходит в респонс и оотуда вытягиваем-а теперь мы их берем этих юзеров с сервера и сетаем(вставляем) в наш стейт!!*/
       this.props.setTotalUsersCount(response.data.totalCount);
     });/*data.items-это наши юзеры*/
@@ -22,7 +26,9 @@ class UsersContainer extends React.Component {
 
     onPageChanged = (pageNumber)=> {/*брем текущую страницу с сервера*/
       this.props.setCurrentPage(pageNumber);
+      this.props.toggleIsFetching(true);/*ставим прелоадер*/
       axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}& count=${this.props.pageSize}`).then(response=> {/*в response приходит ответ от сервера */
+      this.props.toggleIsFetching(false);/*убираем прелоадер*/
       this.props.setUsers(response.data.items)});
     }
 
@@ -30,13 +36,17 @@ class UsersContainer extends React.Component {
 
 
     render () {
-   return <Users totalUsersCount={this.props.totalUsersCount} 
+   return <> 
+          {this.props.isFetching ? <Preloader /> : null } 
+   <Users totalUsersCount={this.props.totalUsersCount} 
                  pageSize={this.props.pageSize}
                  currentPage={this.props.currentPage}
                  onPageChanged={this.onPageChanged}
                  users={this.props.users}
                  follow={this.props.follow}
-                 unfollow={this.props.unfollow}/> 
+                 unfollow={this.props.unfollow}
+                 /> 
+            </>
   }
 }
 
@@ -45,7 +55,8 @@ let mapStateToProps = (state) => {/*функция принимает весь �
        users: state.usersPage.users,/* мы внедряем юзеров в стейт и тогда он нам возвращается (flux) и мы их отрисовываем мы возвращаем наш список пользователей из стейта*/
        pageSize:state.usersPage.pageSize,/*получаем значение в компоненту через пропсы из редьюсера*/
        totalUsersCount:state.usersPage.totalUsersCount,/*получаем значение в компоненту через пропсы из редьюсера*/
-       currentPage:state.usersPage.currentPage/*получаем значение в компоненту через пропсы из редьюсера*/
+       currentPage:state.usersPage.currentPage,/*получаем значение в компоненту через пропсы из редьюсера*/
+       isFetching: state.usersPage.isFetching/*просовываем значение*/
     }
     /*поэтому в Users в пропсах будет сидеть users*/
 }
@@ -68,6 +79,9 @@ let mapDispatchToProps = (dispatch) =>{/*передает коллбеки до�
         },
         setTotalUsersCount: (totalCount) => {
             dispatch(setTotalUsersCountActionCreator(totalCount));
+        },
+        toggleIsFetching: (isFetching) => {
+           dispatch(toggleIsFetchingActionCreator(isFetching));
         }
     }
 }
