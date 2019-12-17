@@ -8,8 +8,13 @@ import {withRouter} from 'react-router-dom';
 
 class ProfileContainer extends React.Component {
 /*все пропсы контейнерной приходят в ее дочернюю-презентационную,передать все пропсы можно способом {...this.props.} */
+
    componentDidMount() {
-      axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+    let userID = this.props.match.params.userID;
+    if(!userID) {/*если мы не кликнули по пользователю,то загрузим автар нашего2го пользователя -это Димыч*/
+      userID = 2;
+    }
+      axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userID)
       .then(response=> {  
       this.props.setUserProfile(response.data);
   });
@@ -28,8 +33,8 @@ let mapStateToProps = (state) => ({
 });
 
 
-withRouter(ProfileContainer);/*оборачиваем контейнерную компоненту визроутом*/
+let WithUrlDataContainerComponent = withRouter(ProfileContainer);/*оборачиваем контейнерную компоненту визроутом*/
+/*работает по типу коннекта,создаем контейнрную комопоненту для ProfileContainer и оборачиваем нею ее*/
 
 
-
-export default connect(mapStateToProps, {setUserProfile} ) (ProfileContainer);
+export default connect(mapStateToProps, {setUserProfile} ) (WithUrlDataContainerComponent);
