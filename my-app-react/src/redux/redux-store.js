@@ -10,11 +10,12 @@ let reducers = combineReducers({/*это как бы наш стейт и каж
      dialogsPage: dialogsReducer,
      sideBar: sidebarReducer,
      usersPage: usersReducer/*привязываем странице его редьюсер*/
-
+     
 
 });/*функция склеивания/смешивания редьюсеров*/
 
 let store = createStore(reducers);/*функция,создающая стор - отдаем редьюсеры стору*/
 
+window.store = store;
 
 export default store;
