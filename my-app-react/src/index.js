@@ -20,6 +20,7 @@ let rerenderEntireTree = (state) => {
 rerenderEntireTree(store.getState());/*здесь нам не нужен bind() потомучто мы сразу вызываем от имени store за счет постановки скобок()*/
 
 store.subscribe( () => {/*когда изменится стор он вызовет стреочную функцию и в ней мы вызовем ререндер */
+	
 	let state = store.getState();/*берем стейт сами */
 	rerenderEntireTree(state);/*и передаем его ререндеру,так работает редакс! он сам не перадет стейт после его изменения!*/
 
