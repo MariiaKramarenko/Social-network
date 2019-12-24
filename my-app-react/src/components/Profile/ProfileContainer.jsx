@@ -37,4 +37,5 @@ let WithUrlDataContainerComponent = withRouter(ProfileContainer);/*оборач�
 /*работает по типу коннекта,создаем контейнрную комопоненту для ProfileContainer и оборачиваем нею ее*/
 
 
-export default connect(mapStateToProps, {setUserProfile} ) (WithUrlDataContainerComponent);
+export default connect(mapStateToProps,{setUserProfile})(WithUrlDataContainerComponent);
+

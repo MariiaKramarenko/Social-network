@@ -27,7 +27,7 @@ class UsersContainer extends React.Component {
     onPageChanged = (pageNumber) => {/*брем текущую страницу с сервера*/
       this.props.setCurrentPage(pageNumber);
       this.props.toggleIsFetching(true);/*ставим прелоадер*/
-      usersAPI.getUsers(pageNumber,this.props.pageSize).then(data=> {/*в response приходит ответ от сервера */
+      usersAPI.getUsers(pageNumber, this.props.pageSize).then(data=> {/*в response приходит ответ от сервера */
      
       this.props.toggleIsFetching(false);/*убираем прелоадер*/
       this.props.setUsers(data.items)});
@@ -38,8 +38,9 @@ class UsersContainer extends React.Component {
 
     render () {
    return <div>
-          {this.props.isFetching ? <Preloader /> : null } 
-   <Users totalUsersCount={this.props.totalUsersCount} 
+                {this.props.isFetching ? <Preloader /> : null } 
+
+                <Users totalUsersCount={this.props.totalUsersCount} 
                  pageSize={this.props.pageSize}
                  currentPage={this.props.currentPage}
                  onPageChanged={this.onPageChanged}
@@ -47,9 +48,10 @@ class UsersContainer extends React.Component {
                  follow={this.props.follow}
                  unfollow={this.props.unfollow}
                  toggleFollowingProgress={this.props.toggleFollowingProgress}
-
+                followingInProgress={this.props.followingInProgress}
                  /> 
-            </div>
+                }
+          </div>
   }
 }
 
@@ -60,7 +62,7 @@ let mapStateToProps = (state) => {/*функция принимает весь �
        totalUsersCount:state.usersPage.totalUsersCount,/*получаем значение в компоненту через пропсы из редьюсера*/
        currentPage:state.usersPage.currentPage,/*получаем значение в компоненту через пропсы из редьюсера*/
        isFetching: state.usersPage.isFetching,/*просовываем значение*/
-       followingInProgress:state.usersPage.followingInProgress
+       followingInProgress: state.usersPage.followingInProgress
     }
     /*поэтому в Users в пропсах будет сидеть users*/
 }
