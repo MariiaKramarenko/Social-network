@@ -3,9 +3,11 @@ import s from './Profile.module.css';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import * as axios from 'axios';
-import {setUserProfile} from '../../redux/profile-reducer';
+import {getUserProfile} from '../../redux/profile-reducer';
 import {withRouter} from 'react-router-dom';
-import {usersAPI} from '../../api/api.js';
+
+
+
 class ProfileContainer extends React.Component {
 /*все пропсы контейнерной приходят в ее дочернюю-презентационную,передать все пропсы можно способом {...this.props.} */
 
@@ -14,9 +16,7 @@ class ProfileContainer extends React.Component {
     if(!userID) {/*если мы не кликнули по пользователю,то загрузим автар нашего2го пользователя -это Димыч*/
       userID = 2;
     }
-    usersAPI.getProfile(userID).then(response => {
-      this.props.setUserProfile(response.data);
-    })
+    this.props.getUserProfile(userID);
    }
 
    render() {
@@ -35,5 +35,5 @@ let WithUrlDataContainerComponent = withRouter(ProfileContainer);/*оборач�
 /*работает по типу коннекта,создаем контейнрную комопоненту для ProfileContainer и оборачиваем нею ее*/
 
 
-export default connect(mapStateToProps,{setUserProfile})(WithUrlDataContainerComponent);
+export default connect(mapStateToProps,{getUserProfile})(WithUrlDataContainerComponent);
 

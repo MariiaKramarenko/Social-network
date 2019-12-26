@@ -1,3 +1,5 @@
+import {usersAPI}from '../api/api.js';
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -51,6 +53,11 @@ export const addPostActionCreator = () => ({type: ADD_POST})/*экшнкрией
 
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 
+export const getUserProfile = (userID) => (dispatch) =>{/*санккриейтор  возвращает санку*/
+           usersAPI.getProfile(userID).then(response => {
+           dispatch(setUserProfile(response.data));
+    })
+}
 export const updateNewPostTextActionCreator = (text) =>/*экшнкриейтор принимающий в агрумент текст вводимый пользователм*/
 ({type: UPDATE_NEW_POST_TEXT, newText:text})/*принимает значение экшн тип UPDATE_NEW_POST_TEXT и записывает текст как новый текст поста*/
 
