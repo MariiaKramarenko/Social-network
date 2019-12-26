@@ -1,10 +1,8 @@
 import React from 'react';
 import Users from './Users.jsx';
 import {connect} from 'react-redux';
-import {follow, unfollow, setUsers,setCurrentPage, setTotalUsersCount,toggleIsFetching,toggleFollowingProgress} from '../../redux/users-reducer';
-import * as axios from 'axios';
+import {follow, unfollow,setCurrentPage,toggleFollowingProgress, getUsers} from '../../redux/users-reducer';
 import Preloader from '../common/Preloader/Preloader.jsx';
-import {usersAPI} from '../../api/api.js';
 
 
 class UsersContainer extends React.Component {
@@ -13,28 +11,14 @@ class UsersContainer extends React.Component {
      super(props);} конструктор главной компоненты происходит по умолчанию*/
 
     componentDidMount() {
-      this.props.toggleIsFetching(true);
-      usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {/*в response приходит ответ от сервера */
-      this.props.toggleIsFetching(true);/*убираем прелоадер*/
-      this.props.setUsers(data.items);/*смотри через дебаг что приходит в респонс и оотуда вытягиваем-а теперь мы их берем этих юзеров с сервера и сетаем(вставляем) в наш стейт!!*/
-      this.props.setTotalUsersCount(data.totalCount);
-    });/*data.items-это наши юзеры*/
+      this.props.getUsers(this.props.currentPage, this.props.pageSize);/*помним,что сюда попадает имнно коллбек!а не сам санккреетор,все за счет connect()()*/
     
     }
 
-
-
     onPageChanged = (pageNumber) => {/*брем текущую страницу с сервера*/
-      this.props.setCurrentPage(pageNumber);
-      this.props.toggleIsFetching(true);/*ставим прелоадер*/
-      usersAPI.getUsers(pageNumber, this.props.pageSize).then(data=> {/*в response приходит ответ от сервера */
-     
-      this.props.toggleIsFetching(false);/*убираем прелоадер*/
-      this.props.setUsers(data.items)});
+      this.props.getUsers(pageNumber, this.props.pageSize);
+    
     }
-
-
-
 
     render () {
    return <div>
@@ -47,7 +31,6 @@ class UsersContainer extends React.Component {
                  users={this.props.users}
                  follow={this.props.follow}
                  unfollow={this.props.unfollow}
-                 toggleFollowingProgress={this.props.toggleFollowingProgress}
                 followingInProgress={this.props.followingInProgress}
                  /> 
                 }
@@ -69,12 +52,10 @@ let mapStateToProps = (state) => {/*функция принимает весь �
 
 
 
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps,{/*все это попадает в пропсы-коннтект создает пропсы и коллбеки данной компоненте*/
         follow,
         unfollow,
-        setUsers,
         setCurrentPage,
-        setTotalUsersCount,
-        toggleIsFetching,
-        toggleFollowingProgress
+        toggleFollowingProgress,
+        getUsers
     })(UsersContainer);

@@ -1,3 +1,5 @@
+import {usersAPI} from '../api/api.js';
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -71,14 +73,57 @@ const usersReducer = (state = initialState, action) =>
 }
 
 
-export const follow = (userID) => ( { type: FOLLOW, userID } )/*экшнкриейтор для добавления в друзья пользователя*/
+export const followSuccess = (userID) => ( { type: FOLLOW, userID } )/*экшнкриейтор для добавления в друзья пользователя*/
 /*userID нам нужен чобы знать,какого именно пользователя нам нужно добавить/удалить*/
-export const unfollow = (userID) => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
+export const unfollowSuccess = (userID) => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
 export const setUsers = (users) =>( {type: SET_USERS, users} )/*экшн установления юзеров*/
 export const setCurrentPage = (currentPage) => ( {type:SET_CURRENT_PAGE, currentPage } )/*экшн кот меняет странички*/
 export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount})
 export const toggleIsFetching = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
 export const toggleFollowingProgress = (isFetching, userID) => ({type:TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID})
+
+
+export const getUsers = (currentPage,pageSize) => {/*санк креатор-возвращает санку*/
+
+    return  (dispatch) => {/*санка*/
+      			dispatch(toggleIsFetching(true));/*диспатчим вызов экшн криетора  доступный из замыкания*/
+      			usersAPI.getUsers(currentPage, pageSize).then(data => {/*в response приходит ответ от сервера */
+     			dispatch(toggleIsFetching(false));/*закончился тогглинг -диспатчим вызов экшн криетор с переданным параметром*/
+      			dispatch(setUsers(data.items));/*диспатчим юзеров в стейт-берется из замыкания*/
+      			dispatch(setTotalUsersCount(data.totalCount));/*сетаем тотал каун юзер-из замыкания берем*/
+    });/*data.items-это наши юзеры*/
+}
+}
+
+
+export const follow = (userId) => {/*санк креатор-возвращает санку*/
+
+    return  (dispatch) => {/*санка*/
+      		  dispatch(toggleFollowingProgress(true, userId));
+              usersAPI.follow(userId).then(response =>{
+               if(response.data.resultCode == 0){
+               dispatch(followSuccess(userId));
+               }
+               dispatch(toggleFollowingProgress(false, userId));
+             });
+}
+}
+
+export const unfollow = (userId) => {/*санк креатор-возвращает санку*/
+
+    return  (dispatch) => {/*санка*/
+      		  dispatch(toggleFollowingProgress(true, userId));
+              usersAPI.unfollow(userId).then(response =>{
+               if(response.data.resultCode == 0){
+               dispatch(unfollowSuccess(userId));
+               }
+               dispatch(toggleFollowingProgress(false, userId));
+             });
+}
+}
+
+
+
 
 
 export default usersReducer;
