@@ -1,34 +1,25 @@
 import React from 'react';
 import Header from './Header';
 import {connect} from 'react-redux';
-import {setAuthUserData} from '../../redux/auth-reducer';
-import {usersAPI, authAPI} from '../../api/api.js';
+import {getAuthUserData} from '../../redux/auth-reducer';
 
-/*withCredentials:true - настрйки авторизации */
-class HeaderContainer extends React.Component {
+class HeaderContainer extends React.Component {/*классовая компонента Header*/
 
-     componentDidMount() {
-     /* this.props.usersAPI.authUser(setAuthUserData);*/
-      authAPI.me()
-      .then(response=> {
-          if(response.data.resultCode === 0 ){
-          	let {id,email,login} = response.data.data;
-          	this.props.setAuthUserData(id,email,login);
+     componentDidMount() {/*метод жизненного цикла*/
+     this.props.getAuthUserData();/*из пропсов получаем санк криетор*/
           }
-        });
-     }
 
-     render () {
+     render () { /*вызываем компоненту Header*/
         return  <Header {...this.props} />
 		
      }	
 }
 
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state) =>({/*передаем данной компоненте isAuth и login как пропсы*/
   isAuth: state.auth.isAuth,
   login: state.auth.login,
 });
 
 
-export default connect (mapStateToProps, {setAuthUserData}) (HeaderContainer);
+export default connect (mapStateToProps, {getAuthUserData}) (HeaderContainer);
