@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Dialogs.module.css';
-import {NavLink} from 'react-router-dom';
+import {NavLink,Redirect} from 'react-router-dom';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DiialogItem';
 
@@ -26,7 +26,7 @@ const Dialogs = (props) => {/*константа отвечающая за от�
      let body = e.target.value;
      props.updateNewMessageBody(body);
     }
-
+    if (props.isAuth == false) return <Redirect to='/login' />/*проверка на наличие залогиненности для редиректа*/
 	return(	   
 		<div className={s.dialogs}>
 

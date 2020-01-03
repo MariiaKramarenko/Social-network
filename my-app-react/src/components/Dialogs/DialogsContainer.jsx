@@ -10,7 +10,8 @@ import {connect} from 'react-redux';
 /*этими двумя функциями мы настраиваем наш connect */
 let mapStateToProps =(state)=>{/* тут присваиваем свойства ,цель-превратить часть стейта в пропсы для компоненты*/
    return {
-      dialogsPage: state.dialogsPage
+      dialogsPage: state.dialogsPage,
+      isAuth: state.auth.isAuth
    }
 }
 
