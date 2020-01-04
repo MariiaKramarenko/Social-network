@@ -6,6 +6,8 @@ import DialogItem from './DialogItem/DiialogItem';
 import {sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+
 
 /*этими двумя функциями мы настраиваем наш connect */
 let mapStateToProps =(state)=>{/* тут присваиваем свойства ,цель-превратить часть стейта в пропсы для компоненты*/
@@ -28,6 +30,13 @@ let mapDispatchToProps = (dispatch) => {/*тут передадим коллбе
     }
 }
 
+
+let AuthRedirectComponent = withAuthRedirect(Dialogs);/*оборачиваем в хок компоненту Dialogs в хоку будет происходить редирект
+на логин если isAuth:false*/
+
+
+
+
 /*connect-возвращает нам новую контейнерную компоненту*/
 const DialogsContainer = connect (mapStateToProps,mapDispatchToProps) (Dialogs);/*вызываем функцию два раза она создает контейнерную компоненту 
 и внутри вызывает переданную ей во вторых скобках-презентационную*/
@@ -39,10 +48,6 @@ const DialogsContainer = connect (mapStateToProps,mapDispatchToProps) (Dialogs);
 внутырь презентационной компоненты в качестве пропсов будут переданы f1 f2 
 и соответсвенно свойства которые  сидят в этих объектах
 */
-
-
-
-
 
 
 export default DialogsContainer;
