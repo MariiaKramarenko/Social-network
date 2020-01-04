@@ -38,7 +38,7 @@ let mapStateToProps = (state) => ({
 });
 
 
-let WithUrlDataContainerComponent = withRouter(ProfileContainer);/*оборачиваем контейнерную компоненту визроутом
+let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);/*оборачиваем контейнерную компоненту визроутом
 чтобы иметь доступ к данным url*/
 /*работает по типу коннекта,создаем контейнрную комопоненту для ProfileContainer и оборачиваем нею ее*/
 
