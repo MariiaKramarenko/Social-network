@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import * as axios from 'axios';
 import {getUserProfile} from '../../redux/profile-reducer';
 import {withRouter, Redirect} from 'react-router-dom';
-
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 
 class ProfileContainer extends React.Component {
@@ -26,6 +26,11 @@ class ProfileContainer extends React.Component {
     }
 }
 
+let AuthRedirectComponent = withAuthRedirect(ProfileContainer);/*оборачиваем в хок нашу компоненту 
+чтобы сделать редирект в случае isAuth:false 
+логика редиректа находится в хоке*/
+
+
 /*обязательно,когда наша функция возвращает объект,мы должны ставить круглые скобки*/
 let mapStateToProps = (state) => ({
 	profile: state.profilePage.profile,
@@ -33,7 +38,8 @@ let mapStateToProps = (state) => ({
 });
 
 
-let WithUrlDataContainerComponent = withRouter(ProfileContainer);/*оборачиваем контейнерную компоненту визроутом*/
+let WithUrlDataContainerComponent = withRouter(ProfileContainer);/*оборачиваем контейнерную компоненту визроутом
+чтобы иметь доступ к данным url*/
 /*работает по типу коннекта,создаем контейнрную комопоненту для ProfileContainer и оборачиваем нею ее*/
 
 
