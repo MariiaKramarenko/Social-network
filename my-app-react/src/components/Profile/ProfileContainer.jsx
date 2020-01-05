@@ -31,10 +31,18 @@ let AuthRedirectComponent = withAuthRedirect(ProfileContainer);/*оборачи�
 логика редиректа находится в хоке*/
 
 
+let mapStateToPropsForRedirect = (state) => ({/*пропсы для хока*/
+  isAuth:state.auth.isAuth
+});
+
+AuthRedirectComponent = connect(mapStateToPropsForRedirect)(AuthRedirectComponent);
+
+
+
+
 /*обязательно,когда наша функция возвращает объект,мы должны ставить круглые скобки*/
 let mapStateToProps = (state) => ({
-	profile: state.profilePage.profile,
-  isAuth:state.auth.isAuth
+	profile: state.profilePage.profile
 });
 
 

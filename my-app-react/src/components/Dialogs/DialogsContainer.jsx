@@ -13,7 +13,7 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 let mapStateToProps =(state)=>{/* тут присваиваем свойства ,цель-превратить часть стейта в пропсы для компоненты*/
    return {
       dialogsPage: state.dialogsPage,
-      isAuth: state.auth.isAuth
+      isAuth: state.auth.isAuth/*пропсы для хока*/
    }
 }
 
