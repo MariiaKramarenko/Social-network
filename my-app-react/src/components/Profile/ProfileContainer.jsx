@@ -34,16 +34,9 @@ let mapStateToProps = (state) => ({
 
 
 
-
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer);/*оборачиваем в хок нашу компоненту 
-чтобы сделать редирект в случае isAuth:false 
-логика редиректа находится в хоке*/
-
-
-export default 
-compose(
+export default compose(
   connect(mapStateToProps,{getUserProfile}),
-  withRouter
-  )(AuthRedirectComponent);
-
+  withRouter,
+  withAuthRedirect
+  )(ProfileContainer);
 
