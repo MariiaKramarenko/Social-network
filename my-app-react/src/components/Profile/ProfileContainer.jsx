@@ -6,7 +6,7 @@ import * as axios from 'axios';
 import {getUserProfile} from '../../redux/profile-reducer';
 import {withRouter, Redirect} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
-
+import {compose} from 'redux';
 
 class ProfileContainer extends React.Component {
 /*все пропсы контейнерной приходят в ее дочернюю-презентационную,передать все пропсы можно способом {...this.props.} */
@@ -26,24 +26,24 @@ class ProfileContainer extends React.Component {
     }
 }
 
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer);/*оборачиваем в хок нашу компоненту 
-чтобы сделать редирект в случае isAuth:false 
-логика редиректа находится в хоке*/
-
-
-
-
-
 /*обязательно,когда наша функция возвращает объект,мы должны ставить круглые скобки*/
 let mapStateToProps = (state) => ({
 	profile: state.profilePage.profile
 });
 
 
-let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);/*оборачиваем контейнерную компоненту визроутом
-чтобы иметь доступ к данным url*/
-/*работает по типу коннекта,создаем контейнрную комопоненту для ProfileContainer и оборачиваем нею ее*/
 
 
-export default connect(mapStateToProps,{getUserProfile})(WithUrlDataContainerComponent);
+
+let AuthRedirectComponent = withAuthRedirect(ProfileContainer);/*оборачиваем в хок нашу компоненту 
+чтобы сделать редирект в случае isAuth:false 
+логика редиректа находится в хоке*/
+
+
+export default 
+compose(
+  connect(mapStateToProps,{getUserProfile}),
+  withRouter
+  )(AuthRedirectComponent);
+
 
