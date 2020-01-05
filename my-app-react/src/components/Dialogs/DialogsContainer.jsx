@@ -12,8 +12,7 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 /*этими двумя функциями мы настраиваем наш connect */
 let mapStateToProps =(state)=>{/* тут присваиваем свойства ,цель-превратить часть стейта в пропсы для компоненты*/
    return {
-      dialogsPage: state.dialogsPage,
-      isAuth: state.auth.isAuth/*пропсы для хока*/
+      dialogsPage: state.dialogsPage
    }
 }
 
@@ -33,8 +32,6 @@ let mapDispatchToProps = (dispatch) => {/*тут передадим коллбе
 
 let AuthRedirectComponent = withAuthRedirect(Dialogs);/*оборачиваем в хок компоненту Dialogs в хоку будет происходить редирект
 на логин если isAuth:false*/
-
-
 
 
 /*connect-возвращает нам новую контейнерную компоненту*/
