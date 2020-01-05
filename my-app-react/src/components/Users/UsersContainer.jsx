@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {follow, unfollow,setCurrentPage,toggleFollowingProgress, getUsers} from '../../redux/users-reducer';
 import Preloader from '../common/Preloader/Preloader.jsx';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 class UsersContainer extends React.Component {
 
@@ -33,10 +34,10 @@ class UsersContainer extends React.Component {
                  unfollow={this.props.unfollow}
                 followingInProgress={this.props.followingInProgress}
                  /> 
-                }
+                
           </div>
+          }
   }
-}
 
 let mapStateToProps = (state) => {/*функция принимает весь глобальный state и возвращает объект только стеми данными которые нам реально нужны */
     return {
@@ -50,12 +51,17 @@ let mapStateToProps = (state) => {/*функция принимает весь �
     /*поэтому в Users в пропсах будет сидеть users*/
 }
 
-let withRedirect = withAuthRedirect(UsersContainer);/*оборачиваем компоненту в хок чтобы использовать редирект при залогиненности*/
-
-export default connect(mapStateToProps,{/*все это попадает в пропсы-коннтект создает пропсы и коллбеки данной компоненте*/
+export default  compose(
+  connect(mapStateToProps,{/*все это попадает в пропсы-коннтект создает пропсы и коллбеки данной компоненте*/
         follow,
         unfollow,
         setCurrentPage,
         toggleFollowingProgress,
         getUsers
-    })(withRedirect);
+    }),
+  withAuthRedirect
+  )(UsersContainer);
+
+
+
+

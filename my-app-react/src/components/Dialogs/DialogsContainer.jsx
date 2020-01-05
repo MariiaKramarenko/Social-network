@@ -35,11 +35,8 @@ let mapDispatchToProps = (dispatch) => {/*тут передадим коллбе
 
 /*закомментированная логика ниже заменена на функцию compose*/
 
-
-
 /*let AuthRedirectComponent = withAuthRedirect(Dialogs);/*оборачиваем в хок компоненту Dialogs в хоку будет происходить редирект
 на логин если isAuth:false*/
-
 
 /*connect-возвращает нам новую контейнерную компоненту*/
 /*const DialogsContainer = connect(mapStateToProps,mapDispatchToProps)(AuthRedirectComponent);/*вызываем функцию два раза она создает контейнерную компоненту 

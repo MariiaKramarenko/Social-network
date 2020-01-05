@@ -16,7 +16,7 @@ export const withAuthRedirect =(Component)=>{/*функция кот прини�
              return <Component {...this.props} />/*отрисовывание компоненты и прокидывание в нее пропсов*/
      }
  }
-    let ConnectedAuthRedirectComponent = connect(mapStateToPropsForRedirect)(RedirectComponent);/*онектим пропсы к хоку */
+    let ConnectedAuthRedirectComponent = connect(mapStateToPropsForRedirect)(RedirectComponent);/*конектим пропсы к хоку */
     return ConnectedAuthRedirectComponent;/*ретурним уже законнекченную компоненту как переменную*/
 }
 
