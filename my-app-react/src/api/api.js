@@ -22,10 +22,24 @@ export const usersAPI = {/*вспомогательный объект в кот
     },unfollow(userId){
              return instance.delete(`follow/${userId}`)
     },
-    getProfile(userId){
-             return instance.get(`profile/` + userId)
+    getProfile(userId){/*сохраняем беэкворккомпатибилити- то есть те запросы кот. были они не сломаются*/
+             return profileAPI.getProfile(userId);/*переделегирование*/
     }
 }
+
+
+export const profileAPI = {
+    getProfile(userId){
+             return instance.get(`profile/` + userId);
+    },
+    getStatus(userId){/*получаем статую юзера узнаем какого-с помощью айди юзера*/
+             return instance.get(`profile/status/` + userId);
+    },
+    updateStatus(status){/*как называется параметр в объекте:смотреть апишку в нашем случае status:status*/
+             return instance.put(`profile/status/`, {status:status});
+    }
+}
+
 
 export const authAPI ={
      me(){
@@ -33,15 +47,3 @@ export const authAPI ={
     }
 }
 
-
-
-/*,
-      authUser(setAuthUserData){
-        return instance.get(`https://social-network.samuraijs.com/api/1.0/auth/me`)
-             .then(response=> {
-               if(response.data.resultCode === 0 ){
-               let {id,email,login} = response.data.data;
-              this.props.setAuthUserData(id,email,login);
-          }
-        });
-      }*/

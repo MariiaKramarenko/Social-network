@@ -3,7 +3,7 @@ import s from './Profile.module.css';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import * as axios from 'axios';
-import {getUserProfile} from '../../redux/profile-reducer';
+import {getUserProfile, getStatus, updateStatus} from '../../redux/profile-reducer';
 import {withRouter, Redirect} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
@@ -16,19 +16,21 @@ class ProfileContainer extends React.Component {
     if(!userID) {/*если мы не кликнули по пользователю,то загрузим автар нашего2го пользователя -это Димыч*/
       userID = 2;
     }
-    this.props.getUserProfile(userID);
+    this.props.getUserProfile(userID);/*запрашиваем профиль юзера*/
+    this.props.getStatus(userID);/*запрашиваем статус юзера*/
    }
 
    render() {
       if (this.props.isAuth == false) return <Redirect to='/login' />
        return (
-        <Profile {...this.props} profile={this.props.profile} />)
+        <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>)
     }
 }
 
 /*обязательно,когда наша функция возвращает объект,мы должны ставить круглые скобки*/
 let mapStateToProps = (state) => ({
-	profile: state.profilePage.profile
+	profile: state.profilePage.profile,/*прокидываем профиль сюда пропсами из стейта*/
+  status:state.profilePage.status/*прокидываем статус пропсами сюда из стейта*/
 });
 
 
@@ -37,7 +39,7 @@ let mapStateToProps = (state) => ({
 export default compose(/*функция компоуз берет ProfileContainer оборачивает в withAuthRedirect 
   результат этого оборачивает в withRouter
   результат этого оборачивает в connect*/
-  connect(mapStateToProps,{getUserProfile}),
+  connect(mapStateToProps,{getUserProfile, getStatus, updateStatus}),
   withRouter,
   withAuthRedirect
   )(ProfileContainer);
