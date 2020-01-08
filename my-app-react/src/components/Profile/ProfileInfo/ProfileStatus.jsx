@@ -26,6 +26,16 @@ class ProfileStatus extends React.Component {/*создаем класс*/
       
     }
 /*помним,что в классе теряется контекст вызова поэтому мы в обращении к методу класса должны ставить bind  и баиндить его к данному классу this*/
+   
+   componentDidUpdate(prevProps, prevState){/*здесь мы должны вывести изменения стейта */
+    debugger
+    let a = this.state;
+    let b = this.props;
+    console.log("componentDidUpdate");
+   }
+
+
+
    render(){
          return(
    	       <div>
