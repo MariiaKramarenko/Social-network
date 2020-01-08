@@ -26,12 +26,16 @@ class ProfileStatus extends React.Component {/*создаем класс*/
       
     }
 /*помним,что в классе теряется контекст вызова поэтому мы в обращении к методу класса должны ставить bind  и баиндить его к данному классу this*/
-   
+   /*componentDidUpdate вызывается при каждом изменении стейта*/
+
+   /*ВАЖНО: внутри componentDidUpdate все setState всегда должны быть внутри какого-то условия if*/
    componentDidUpdate(prevProps, prevState){/*здесь мы должны вывести изменения стейта */
-    debugger
-    let a = this.state;
-    let b = this.props;
-    console.log("componentDidUpdate");
+    if(prevProps.status !== this.props.status){/*если изменился именно статус то делаем апдейт его*/
+    this.setState({/*вызываем изменение локального стейта*/
+      status: this.props.status/*заменяем статус текущий на тот что приходит из глобального стейта из пропсов*/
+    });
+  }
+    console.log("componentDidUpdate");/*просто для того чтобы выдеть в консоли отображение выполнения метода*/
    }
 
 
