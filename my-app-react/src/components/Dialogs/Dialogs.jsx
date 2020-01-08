@@ -3,7 +3,7 @@ import s from './Dialogs.module.css';
 import {NavLink,Redirect} from 'react-router-dom';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DiialogItem';
-
+import {Field, reduxForm} from 'redux-form';
 
 const Dialogs = (props) => {/*константа отвечающая за отлисовку диалогов*/
      
@@ -13,35 +13,41 @@ const Dialogs = (props) => {/*константа отвечающая за от�
     /*получаем диалогайтемсы путем мапинга(перерисовки массива данных в jsx посты)*/
     let massagesElements = state.messages.map( m => <Message message ={m.message} key={m.id} />);
     let newMessageBody = state.newMessageBody; 
-
-
     let newMessageElement = React.createRef();/*создаем ссылку которая ссылается на текстареа*/
-   
-    let onSendMessageClick =() =>{/*функция отправки сообщения по клику -сюда передаем коллбеком люгику*/
-    let text = newMessageElement.current.value;/*получаем текст введенный пользоваталем через доступ к нативному value*/
-    props.sendMessage();
+
+
+    let addNewMessage = (values) => {/*функция добавляет сообщение по срабатыванию onSubmit*/
+        props.sendMessage(values.newMessageBody);
     }
 
-    let onNewMessageChange =(e)=>{/*функция принимающая текст сообщения из текстареа через е ,кот записывает его в переменную body*/
-     let body = e.target.value;
-     props.updateNewMessageBody(body);
-    }
-    if (props.isAuth == false) return <Redirect to='/login' />/*проверка на наличие залогиненности для редиректа*/
+    if (!props.isAuth) return <Redirect to='/login' />;/*проверка на наличие залогиненности для редиректа*/
 	return(	   
 		<div className={s.dialogs}>
-
 			<div className={s.dialogsItems}> 				
                 {dialogsElements}              
 			</div>
-
 		    <div className={s.messages}>         
                 {massagesElements}
-                <textarea value={newMessageBody}  onChange={onNewMessageChange} ref={newMessageElement}></textarea>
-                 <button onClick={onSendMessageClick}>Send message</button>
-		    </div>
-
-		</div>		
+            <AddMessageFormRedux onSubmit={addNewMessage} />   
+           </div>
+         </div>		
 		)
 }
+/*обращаемся к AddMessageFormRedux и говорим,когда ты засабмтишься выполни функцию ={}*/
+const AddMessageForm = (props) =>{
+    return (
+    <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field component={"textarea"} name={"newMessageBody"} placeholder={"Enter your message"} />
+        </div>
+     
+        <div>
+            <button>Send message</button>
+        </div>
+    
+    </form>)
+}
+
+const AddMessageFormRedux = reduxForm({form:"dialogAddMessageForm"}) (AddMessageForm);/*оборачиваем форму в хок reduxForm*/
 
 export default Dialogs;

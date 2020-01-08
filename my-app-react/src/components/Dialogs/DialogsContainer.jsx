@@ -3,7 +3,7 @@ import s from './Dialogs.module.css';
 import {NavLink} from 'react-router-dom';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DiialogItem';
-import {sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogs-reducer';
+import {sendMessageCreator} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
@@ -18,19 +18,11 @@ let mapStateToProps =(state)=>{/* тут присваиваем свойства
 
 let mapDispatchToProps = (dispatch) => {/*тут передадим коллбеки коллбеки*/
     return {
-       sendMessage: (body) => { 
-        dispatch(sendMessageCreator(body));
-        
-    } ,
-       updateNewMessageBody:(body) => {
-        dispatch(updateNewMessageBodyCreator(body));
-    } 
-
+       sendMessage: (newMessageBody) => { 
+        dispatch(sendMessageCreator(newMessageBody));      
+       }
     }
 }
-
-
-
 
 
 /*закомментированная логика ниже заменена на функцию compose*/
