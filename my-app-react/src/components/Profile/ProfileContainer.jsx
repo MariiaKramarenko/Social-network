@@ -14,7 +14,7 @@ class ProfileContainer extends React.Component {
    componentDidMount() {
     let userID = this.props.match.params.userID;
     if(!userID) {/*если мы не кликнули по пользователю,то загрузим автар нашего2го пользователя -это Димыч*/
-      userID = 2;
+      userID = 5385;
     }
     this.props.getUserProfile(userID);/*запрашиваем профиль юзера*/
     this.props.getStatus(userID);/*запрашиваем статус юзера*/
@@ -41,6 +41,6 @@ export default compose(/*функция компоуз берет ProfileContain
   результат этого оборачивает в connect*/
   connect(mapStateToProps,{getUserProfile, getStatus, updateStatus}),
   withRouter,
-  withAuthRedirect
+  //withAuthRedirect
   )(ProfileContainer);
 

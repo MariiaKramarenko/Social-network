@@ -31,7 +31,7 @@ class ProfileStatus extends React.Component {/*создаем класс*/
    	       <div>
    	       {!this.state.editMode && /*если значение false &&-тогда выполняет логику с пом. аттрибута onDoubleClick вызываем метод класса*/
              <div>
-     	        <span onDoubleClick={this.activateEditMode}> {this.props.status}</span>
+     	        <span onDoubleClick={this.activateEditMode}> {this.props.status || "no status"}</span>
      	     </div>
      	    }
      	    {this.state.editMode && /*если значение ture &&-тогда выполняем логику посредством аттрибута onBlur- при фокусе срабатывает метод класса*/
