@@ -1,7 +1,40 @@
 import React from 'react';
+import {Field, reduxForm} from 'redux-form';
 
-const Login = () => {
-  return <h2>LOGIN</h2>
+/*Field-компонента,пришедшая к нам их редакс-форм
+name-считывает введенные значение и называет данный инпут
+component-обозначает тип 
+handleSubmit-обрабатывает форму,приходит из пропсов которые прокидывает хок reduxForm ()()
+*/
+const LoginForm = (props) => {
+  return <form onSubmit={props.handleSubmit} >
+  			<div>
+  				<Field placeholder={"Login"} name={"login"} component={"input"} />
+  			</div>
+  			<div>
+  				<Field placeholder={"Password"} name={"password"} component={"input"}/>
+  			</div>
+  			<div>
+  				<Field type={"checkbox"} name={"rememberMe"} component={"input"} /> remember me
+  			</div>
+  			<div>
+  				<button>Login</button>
+  			</div>
+  		</form>
 }
 
+const LoginReduxForm = reduxForm({/*вызываем хок -см документацию*/
+      form: 'login' /*уникальное имя для данной формы*/
+})(LoginForm)/*второй парметр- форма,вокруг которой этот хок создаст контейнерную компоненту*/
+
+
+const Login = () => {
+	const onSubmit = (formData) =>{/*сюда прийдут все значения из формы*/
+        console.log(formData);/*выведем для наглядности данные кот попадают в formData*/
+	}
+  return <div>
+  			<h2>LOGIN</h2>
+        	<LoginReduxForm onSubmit={onSubmit}/>
+        </div>
+}
 export default Login;

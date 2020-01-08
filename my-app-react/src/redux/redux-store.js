@@ -5,14 +5,15 @@ import sidebarReducer from "./sidebar-reducer.js";
 import usersReducer from "./users-reducer.js";
 import authReducer from "./auth-reducer.js";
 import thunkMiddleware from "redux-thunk";/*Middleware импорт слоя для обработки санок*/
-
+import { reducer as formReducer} from "redux-form";/*импорт редьюсера для создания форм*/
 
 let reducers = combineReducers({/*это как бы наш стейт и каждый редьюсер для каждой странички*/
      profilePage: profileReducer,
      dialogsPage: dialogsReducer,
      sideBar: sidebarReducer,
      usersPage: usersReducer,
-     auth: authReducer
+     auth: authReducer,
+     form: formReducer /*здесь должно быть написано именно form*/
      /*привязываем странице его редьюсер*/
      
 
