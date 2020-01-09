@@ -4,6 +4,9 @@ import {NavLink,Redirect} from 'react-router-dom';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DiialogItem';
 import {Field, reduxForm} from 'redux-form';
+import AddMessageForm from './AddMessageForm/AddMessageForm';
+
+
 
 const Dialogs = (props) => {/*константа отвечающая за отлисовку диалогов*/
      
@@ -28,26 +31,11 @@ const Dialogs = (props) => {/*константа отвечающая за от�
 			</div>
 		    <div className={s.messages}>         
                 {massagesElements}
-            <AddMessageFormRedux onSubmit={addNewMessage} />   
+            <AddMessageForm onSubmit={addNewMessage} />   
            </div>
          </div>		
 		)
 }
 /*обращаемся к AddMessageFormRedux и говорим,когда ты засабмтишься выполни функцию ={}*/
-const AddMessageForm = (props) =>{
-    return (
-    <form onSubmit={props.handleSubmit}>
-        <div>
-            <Field component={"textarea"} name={"newMessageBody"} placeholder={"Enter your message"} />
-        </div>
-     
-        <div>
-            <button>Send message</button>
-        </div>
-    
-    </form>)
-}
-
-const AddMessageFormRedux = reduxForm({form:"dialogAddMessageForm"}) (AddMessageForm);/*оборачиваем форму в хок reduxForm*/
 
 export default Dialogs;
