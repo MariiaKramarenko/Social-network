@@ -3,7 +3,7 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {Field, reduxForm} from 'redux-form';
 import {required, maxLengthCreator} from '../../../utils/validators/validators';
-
+import {Textarea} from '../../common/FormsControls/FormsControls';
 
 const MyPosts = (props) => {/*константа майпост принимает в пропсы state*/
 
@@ -36,7 +36,7 @@ const AddNewPostForm = (props) =>{/*выносим форму в отдельн�
  return (
          <form onSubmit={props.handleSubmit}>
             <div>
-              <Field validate={[required, maxLength10]} placeholder={"Send your post"} name={"newPostText"} component={"textarea"}/>
+              <Field validate={[required, maxLength10]} placeholder={"Send your post"} name={"newPostText"} component={Textarea}/>
             </div>
             <div>
               <button className={s.addpost}>Add post</button>
