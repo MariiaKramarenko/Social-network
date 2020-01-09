@@ -6,23 +6,17 @@ import Post from './Post/Post';
 import {connect} from 'react-redux';
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state) => {/*прокидываем пропсы в эту компоненту из стейта*/
   return {
     posts: state.profilePage.posts,
     newPostText: state.profilePage.newPostText
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
+let mapDispatchToProps = (dispatch) => {/*вызываем действия с помощью прокинутых коллбеков*/
   return {
-
-    updateNewPostText:(text) => {
-      let action = updateNewPostTextActionCreator(text);
-      dispatch(action);/*знания о сторе мы вынесли в контейнерную компоненту*/
-    },
-
-    addPost: () => {
-      dispatch(addPostActionCreator());
+    addPost: (newPostText) => {/*добавляем пост на стену-вызываем редьюсер*/
+      dispatch(addPostActionCreator(newPostText));
     }
     
     }
@@ -30,8 +24,5 @@ let mapDispatchToProps = (dispatch) => {
 
 
 const MyPostsContainer = connect (mapStateToProps, mapDispatchToProps) (MyPosts);
-
-
-
 
 export default MyPostsContainer;
