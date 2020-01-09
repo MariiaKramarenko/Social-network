@@ -1,6 +1,7 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
-
+import {Input} from '../common/FormsControls/FormsControls';
+import {required} from '../../utils/validators/validators';
 /*Field-компонента,пришедшая к нам их редакс-форм
 name-считывает введенные значение и называет данный инпут
 component-обозначает тип 
@@ -9,15 +10,15 @@ handleSubmit-обрабатывает форму,приходит из проп�
 const LoginForm = (props) => {
   return <form onSubmit={props.handleSubmit} >
   			<div>
-  				<Field placeholder={"Login"} name={"login"} component={"input"} />
+  				<Field validate={[required]} placeholder={"Login"} name={"login"} component={Input} />
   			</div>
   			<div>
   				<Field placeholder={"Password"} name={"password"} component={"input"}/>
   			</div>
   			<div>
-  				<Field type={"checkbox"} name={"rememberMe"} component={"input"} /> remember me
+  				<Field type={"checkbox"} name={"rememberMe"} component={Input} /> remember me
   			</div>
-  			<div>
+  			<div>  
   				<button>Login</button>
   			</div>
   		</form>
