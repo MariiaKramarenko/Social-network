@@ -57,17 +57,12 @@ export const getUserProfile = (userID) => (dispatch) =>{/*санккриейто
     })
 }
 
-
-
-
-
 export const getStatus = (userID) => (dispatch) => {/*санккриетор для получения статуса юзера*/
     profileAPI.getStatus(userID)/*обращаеся к апишке профайла и получаем статус с сервера*/
     .then(response => {
       dispatch(setStatus(response.data));/*сетаем полученный статус*/
     })    
 }
-
 
 
 export const updateStatus = (status) => (dispatch) => {/*санккриетор для обновления статуса юзера*/
@@ -77,10 +72,5 @@ export const updateStatus = (status) => (dispatch) => {/*санккриетор 
       dispatch(setStatus(status));/*диспатчим сет статус c переданным значением*/
     }})    
 }
-
-
-export const updateNewPostTextActionCreator = (text) =>/*экшнкриейтор принимающий в агрумент текст вводимый пользователм*/
-({type: UPDATE_NEW_POST_TEXT, newText:text})/*принимает значение экшн тип UPDATE_NEW_POST_TEXT и записывает текст как новый текст поста*/
-
 
 export default profileReducer;

@@ -2,7 +2,7 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {Field, reduxForm} from 'redux-form';
-
+import {required, maxLengthCreator} from '../../../utils/validators/validators';
 
 
 const MyPosts = (props) => {/*константа майпост принимает в пропсы state*/
@@ -30,12 +30,13 @@ const MyPosts = (props) => {/*константа майпост принимае
   	)
 
 }
+const maxLength10 = maxLengthCreator(10);
 
 const AddNewPostForm = (props) =>{/*выносим форму в отдельную компоненту*/
  return (
          <form onSubmit={props.handleSubmit}>
             <div>
-              <Field placeholder={"Send your post"} name={"newPostText"} component={"textarea"}/>
+              <Field validate={[required, maxLength10]} placeholder={"Send your post"} name={"newPostText"} component={"textarea"}/>
             </div>
             <div>
               <button className={s.addpost}>Add post</button>
