@@ -41,9 +41,16 @@ export const profileAPI = {
 }
 
 
-export const authAPI ={
+export const authAPI ={/*объект в апишке отвечающий за запросы для логинизации в соцсети*/
      me(){
-            return instance.get(`auth/me`)
+            return instance.get(`auth/me`);
+    },
+     login(email, password, rememberMe = false){/*вместе с post запросом мы отправляем на сервак данные вторым парамером как объект(для put и post мы передаем объект данных)*/
+            return instance.post(`auth/login`, {email, password, rememberMe});
+    },
+     logout(){/*вылогиниваемся*/
+            return instance.delete(`auth/login`);/*delete запрос удалит на сервере данные логинизации*/
     }
+
 }
 
