@@ -4,6 +4,7 @@ import {Input} from '../common/FormsControls/FormsControls';
 import {required} from '../../utils/validators/validators';
 import {connect} from 'react-redux';
 import {login} from '../../redux/auth-reducer';
+import {Redirect} from 'react-router-dom';
 
 /*Field-компонента,пришедшая к нам их редакс-форм
 name-считывает введенные значение и называет данный инпут
@@ -37,10 +38,17 @@ const Login = (props) => {
         console.log(formData);/*выведем для наглядности данные кот попадают в formData*/
         props.login(formData.email, formData.password, formData.rememberMe);/*вызываем логинизатор-коллбек, раскукожили formData - все эти параметры сидят в ней (см. f12)*/
 	}
+
+  if (props.isAuth){
+    return <Redirect to={"/profile"} />
+  }
   return <div>
   			<h2>LOGIN</h2>
         	<LoginReduxForm onSubmit={onSubmit}/>
         </div>
 }
 
-export default connect(null, {login} ) (Login);/*null-потому что нет mapStateToProps , {Login}-коллбек кот диспатчит вызов санккриетора*/
+const mapStateToProps = (state) =>({
+  isAuth:state.auth.isAuth
+})
+export default connect(mapStateToProps, {login} ) (Login);/*null-потому что нет mapStateToProps , {Login}-коллбек кот диспатчит вызов санккриетора*/
