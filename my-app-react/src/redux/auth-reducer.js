@@ -1,4 +1,8 @@
 import {authAPI} from '../api/api.js';
+import {stopSubmit} from 'redux-form';
+
+
+
 const SET_USER_DATA = 'SET_USER_DATA';
 
 
@@ -42,10 +46,16 @@ export const getAuthUserData = () => (dispatch) => {/*санк-криейтор 
 
 
 export const login = (email, password, rememberMe) => (dispatch) => {/*санк-криейтор для получения данных для входа(логина)*/
+
+
    authAPI.login(email, password, rememberMe)/*запрос на сервер на login и передаем данные для логинизации*/
       .then(response=> {/*в ответе (респонсе) от сервера сидят даннные*/
           if(response.data.resultCode === 0 ){/*если от сервера пришел ответ 0 значит успешен запрос*/
              dispatch(getAuthUserData())/*диспатчим getAuthUserData кот. получает данные*/
+          } else{/*обработка ввода неверных данных в форму логина*/
+             let messages = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";/*берем значение строчное ошибки из данных от сервера,там они сидят в []*/
+           /*берем первое значение сообщения обошибке(приходит от сервера и на всякий случай ставим свою надпись об ошибке*/
+           dispatch(stopSubmit("login", {_error: messages}));/*первое значение-какую форму мы останавливаем на проверку(_error-значение для всех полей общее),второй парам- объект с проверяемыми значениями(поля формы)*/
           }
         });
 }
