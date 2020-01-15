@@ -14,7 +14,7 @@ class ProfileContainer extends React.Component {
    componentDidMount() {
     let userID = this.props.match.params.userID;
     if(!userID) {/*если мы не кликнули по пользователю,то загрузим автар нашего2го пользователя -это Димыч*/
-      userID = 5385;
+      userID = this.props.autorizedUserId;
     }
     this.props.getUserProfile(userID);/*запрашиваем профиль юзера*/
     this.props.getStatus(userID);/*запрашиваем статус юзера*/
@@ -23,14 +23,19 @@ class ProfileContainer extends React.Component {
    render() {
       if (this.props.isAuth == false) return <Redirect to='/login' />
        return (
-        <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>)
+        <Profile {...this.props} 
+        profile={this.props.profile} 
+        status={this.props.status} 
+        updateStatus={this.props.updateStatus}/>)
     }
 }
 
 /*обязательно,когда наша функция возвращает объект,мы должны ставить круглые скобки*/
 let mapStateToProps = (state) => ({
 	profile: state.profilePage.profile,/*прокидываем профиль сюда пропсами из стейта*/
-  status:state.profilePage.status/*прокидываем статус пропсами сюда из стейта*/
+  status:state.profilePage.status,/*прокидываем статус пропсами сюда из стейта*/
+  autorizedUserId: state.auth.userId,/*узнаем мой айди для высвечивания моего профиля в случае если кликнутого нет*/
+  isAuth:state.auth.isAuth/*взяли чтобы знать сост авторизации для высвечиванияпрофиля в условии когда того на кого мы кликнули нет */
 });
 
 
