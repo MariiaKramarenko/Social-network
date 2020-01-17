@@ -4,10 +4,7 @@ import {NavLink} from 'react-router-dom';
 import Friend from './Friend/Friend';
 
 const Navbar = (props) => {
-  
-  let listFriends = props.state.avatars.map( f =>
-     <Friend name={f.name} src={f.src}/> );
-    
+
   return (
           <nav className={s.nav}>
              <div className={s.item}>
@@ -28,12 +25,6 @@ const Navbar = (props) => {
              <div className={s.item}>
                    <a href="#">Settings</a>
              </div>
-         
-              <div >
-                <h4 className={s.friends}>My friends:</h4>
-                <p> {listFriends} </p>               
-              </div>
-
          </nav>
 
     )
