@@ -34,13 +34,19 @@ class ProfileContainer extends React.Component {
 }
 
 /*обязательно,когда наша функция возвращает объект,мы должны ставить круглые скобки*/
-let mapStateToProps = (state) => ({
+/*let mapStateToProps = (state) => ({
 	profile: state.profilePage.profile,/*прокидываем профиль сюда пропсами из стейта*/
-  status:state.profilePage.status,/*прокидываем статус пропсами сюда из стейта*/
-  autorizedUserId: state.auth.userId,/*узнаем мой айди для высвечивания моего профиля в случае если кликнутого нет*/
-  isAuth:state.auth.isAuth/*взяли чтобы знать сост авторизации для высвечиванияпрофиля в условии когда того на кого мы кликнули нет */
-});
+  /*status:state.profilePage.status,/*прокидываем статус пропсами сюда из стейта*/
+ /* autorizedUserId: state.auth.userId,/*узнаем мой айди для высвечивания моего профиля в случае если кликнутого нет*/
+  /*isAuth:state.auth.isAuth/*взяли чтобы знать сост авторизации для высвечиванияпрофиля в условии когда того на кого мы кликнули нет */
+/*});*/
 
+let mapStateToProps = (state) => ({
+profile: state.profilePage.profile,
+status:state.profilePage.status,
+autorizedUserId: state.auth.userId,
+isAuth:state.auth.isAuth
+});
 
 
 

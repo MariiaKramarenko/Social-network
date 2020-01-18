@@ -87,7 +87,8 @@ export const getUsers = (currentPage,pageSize) => {/*санк креатор-в�
 
     return  (dispatch) => {/*санка*/
       			dispatch(toggleIsFetching(true));/*диспатчим вызов экшн криетора  доступный из замыкания*/
-      			usersAPI.getUsers(currentPage, pageSize).then(data => {/*в response приходит ответ от сервера */
+      			dispatch(setCurrentPage(currentPage));
+            usersAPI.getUsers(currentPage, pageSize).then(data => {/*в response приходит ответ от сервера */
      			dispatch(toggleIsFetching(false));/*закончился тогглинг -диспатчим вызов экшн криетор с переданным параметром*/
       			dispatch(setUsers(data.items));/*диспатчим юзеров в стейт-берется из замыкания*/
       			dispatch(setTotalUsersCount(data.totalCount));/*сетаем тотал каун юзер-из замыкания берем*/
