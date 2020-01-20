@@ -6,6 +6,9 @@ import Preloader from '../common/Preloader/Preloader.jsx';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import {getPageSize, getUsersAll, getTotalUsersCount, getCurrentPage, getIsFetching, getFollowingInProgress} from '../../redux/users-selectors';
+import {getUsersSuperSelector} from '../../redux/users-selectors.js';
+
+
 
 class UsersContainer extends React.Component {
 
@@ -54,7 +57,8 @@ class UsersContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-       users: getUsersAll(state),
+       //users: getUsersAll(state),
+       users:getUsersSuperSelector(state),/*вызываем селектор,созданный с помощью reselect*/
        pageSize:getPageSize(state),
        totalUsersCount:getTotalUsersCount(state),
        currentPage:getCurrentPage(state),
