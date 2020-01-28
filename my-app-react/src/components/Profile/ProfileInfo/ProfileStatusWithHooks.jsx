@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 
 
@@ -19,6 +19,13 @@ let [editMode, setEditMode] = useState(false);/*объявляем юз стей
 let [status, setStatus] = useState(props.status);/*концепция хуков-делайте много локальных стейтов,
 поэтому деаем такой же стейт для передачи статуса и в последствии его изменений с пом функции кот сидит как второй параметр*/
 
+
+/*useEffect -синхронизация состояния компоненты*/
+useEffect(()=>{
+   setStatus(props.status);
+}, [props.status]);/*принимает функцию кот отрисовывается когда компонента отрисуется 
+[props.status] - то от чего зависит перерисовка useEffect
+*/
 
 const activateEditMode = () =>{/*функция,меняющая по клику дефолтное значение в массиве useState посредством вызова второго парметра-функции */
    setEditMode(true);/*меняем значение с пом вызова функции*/
