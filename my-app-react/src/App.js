@@ -16,12 +16,12 @@ import Preloader from "./components/common/Preloader/Preloader";
 
 class App extends React.Component {
 
-    componentDidMount() {
+componentDidMount() {//проверяем инициализацию всего приложения через initializeApp кот находится в app-reducer
         this.props.initializeApp();
-    }
+}
 
- render() {
-          if (!this.props.initialized) {
+ render() {//составим условие для инициализации приложения
+          if (!this.props.initialized) {//если инициализация вернула false тогда высвечиваем прокрутку(прелоадер компонента)
             return <Preloader/>
         }
 
@@ -44,7 +44,7 @@ class App extends React.Component {
   );
 }
 }
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({//прокидываем пропсами значение initialized для того чтобы сделать инициализацию
     initialized: state.app.initialized
 })
-export default compose(connect(mapStateToProps, {initializeApp}))(App);
+export default compose(connect(mapStateToProps, {initializeApp}))(App);//композим результат

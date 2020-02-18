@@ -1,12 +1,12 @@
 import {authAPI} from '../api/api.js';
 import {stopSubmit} from 'redux-form';
 
-
+//редьюсер авторизации в нашем приложении
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
 
-let initialState = {
+let initialState = {//начальный стейт с данными для авторизации в приложении
    userId:null ,
    email:null ,
    login:null ,
@@ -14,11 +14,9 @@ let initialState = {
 
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {//компонента-редьюсер
 /*всегда все данные которые нужны для преобразования в reducer всегда лежат в action!*/
-
-	switch(action.type){
-    
+	switch(action.type){    
 		case SET_USER_DATA :{
           return {
            ...state,
@@ -44,10 +42,7 @@ export const getAuthUserData = () => (dispatch) => {/*санк-криейтор 
 
 }
 
-
 export const login = (email, password, rememberMe) => (dispatch) => {/*санк-криейтор для получения данных для входа(логина)*/
-
-
    authAPI.login(email, password, rememberMe)/*запрос на сервер на login и передаем данные для логинизации*/
       .then(response=> {/*в ответе (респонсе) от сервера сидят даннные*/
           if(response.data.resultCode === 0 ){/*если от сервера пришел ответ 0 значит успешен запрос*/

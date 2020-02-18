@@ -7,7 +7,7 @@ import store from './redux/redux-store';
 import './index.css';
 import {Provider} from 'react-redux';
 
-
+//компонента Provider предоставляет приложению доступ к стору - то есть связывает ее с редаксом
 
 	ReactDOM.render(
     <Provider store={store}>
