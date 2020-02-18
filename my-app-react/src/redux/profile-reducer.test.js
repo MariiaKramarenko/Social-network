@@ -1,5 +1,5 @@
 import Rect from 'react';
-import profileReducer, {addPostActionCreator} from './profile-reducer.js';
+import profileReducer, {addPostActionCreator, deletePost} from './profile-reducer.js';
 import ReactDOM from "react-dom";
 import App from "../App";
 //вынесем общие данные во избежание дублирования
@@ -36,4 +36,26 @@ let newState = profileReducer(state, action);//сравниваем старый
 expect(newState.posts[2].message).toBe("Mariia Kramarenko"); //ожидаем правильный текст поста 2 потомучто массив начинает считать с 0
 });
 
-///////////////////TEST №3////////////////////////
+///////////////////TDD-TEST №3 ////////////////////////
+it('after deleting length of messages should be decrement', () => {
+    // 1. 
+    let action = deletePost(1);//удалить пост с id =1
+
+    // 2. 
+    let newState = profileReducer(state, action);
+
+    // 3. 
+    expect(newState.posts.length).toBe(1);
+});
+
+///////////////////TDD-TEST №4 ////////////////////////
+it(`after deleting length shouldn't be incorrect if is unsuccesfull`, () => {
+    // 1.
+    let action = deletePost(1000);
+
+    // 2. 
+    let newState = profileReducer(state, action);
+
+    // 3. 
+    expect(newState.posts.length).toBe(2);
+});
