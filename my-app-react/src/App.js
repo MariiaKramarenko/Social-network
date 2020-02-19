@@ -6,14 +6,14 @@ import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import Login from './components/Login/Login';
-import {connect, Provider} from 'react-redux';
+import {connect} from 'react-redux';
 import {getAuthUserData} from './redux/auth-reducer';
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import store from './redux/redux-store';//для компоненты Provider
+
 
 class App extends React.Component {
 
@@ -27,8 +27,7 @@ componentDidMount() {//проверяем инициализацию всего 
         }
 
   return (
-    <BrowserRouter>
-    <Provider store={store}>
+
     <div className="app-wrapper">
       <HeaderContainer />
       <Navbar />
@@ -42,8 +41,7 @@ componentDidMount() {//проверяем инициализацию всего 
         <Route path='/login' render={ () => <Login />} />
       </div>
     </div>
-     </Provider>
-    </BrowserRouter>
+
   );
 }
 }
