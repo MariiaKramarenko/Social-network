@@ -13,20 +13,20 @@ handleSubmit-обрабатывает форму,приходит из проп�
 */
 const LoginForm = (props) => {
   return <form onSubmit={props.handleSubmit} >
-  			<div>
-  				<Field validate={[required]} placeholder={"Email"} name={"email"} component={Input} />
-  			</div>
-  			<div>
-  				<Field  validate={[required]} placeholder={"Password"} name={"password"} type={"password"} component={Input}/>
-  			</div>
-  			<div>
-  				<Field type={"checkbox"} name={"rememberMe"} component={Input} /> remember me
-  			</div>
+        <div>
+          <Field validate={[required]} placeholder={"Email"} name={"email"} component={Input} />
+        </div>
+        <div>
+          <Field  validate={[required]} placeholder={"Password"} name={"password"} type={"password"} component={Input}/>
+        </div>
+        <div>
+          <Field type={"checkbox"} name={"rememberMe"} component={Input} /> remember me
+        </div>
         { props.error && <div className={styles.formSummaryError}>{props.error}</div>}
-  			<div>  
-  				<button>Login</button>
-  			</div>
-  		</form>
+        <div>  
+          <button>Login</button>
+        </div>
+      </form>
 }
 
 const LoginReduxForm = reduxForm({/*вызываем хок -см документацию*/
@@ -35,17 +35,17 @@ const LoginReduxForm = reduxForm({/*вызываем хок -см докумен
 
 
 const Login = (props) => {
-	const onSubmit = (formData) =>{/*сюда прийдут все значения из формы*/
+  const onSubmit = (formData) =>{/*сюда прийдут все значения из формы*/
         console.log(formData);/*выведем для наглядности данные кот попадают в formData*/
         props.login(formData.email, formData.password, formData.rememberMe);/*вызываем логинизатор-коллбек, раскукожили formData - все эти параметры сидят в ней (см. f12)*/
-	}
+  }
 
   if (props.isAuth){
     return <Redirect to={"/profile"} />
   }
   return <div>
-  			<h2>LOGIN</h2>
-        	<LoginReduxForm onSubmit={onSubmit}/>
+        <h2>LOGIN</h2>
+          <LoginReduxForm onSubmit={onSubmit}/>
         </div>
 }
 
