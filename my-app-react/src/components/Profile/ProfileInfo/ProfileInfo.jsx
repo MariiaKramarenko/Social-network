@@ -11,14 +11,9 @@ const ProfileInfo = (props) => {
    } 
 	return (
          <div className={s.postsBlock}>
-   			{/*<div className={s.profileimg}>
-      		<img src="https://cdn.getyourguide.com/img/tour_img-2365930-148.jpg" />
-   			</div>*/}
    			<div className={s.descriptionBlock}>
-
-            <img src={props.profile.photos.large} />
-            <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
-   			ava+description
+               <img src={props.profile.photos.large} />
+                  <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
    			</div>
          </div>         
 		)
