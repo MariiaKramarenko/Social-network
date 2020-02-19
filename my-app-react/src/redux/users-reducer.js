@@ -1,5 +1,4 @@
 import {usersAPI} from '../api/api.js';
-import {updateObjectArray} from '../utils/object-helper.js';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -23,28 +22,23 @@ const usersReducer = (state = initialState, action) =>
 	switch (action.type){
 		case FOLLOW : 
 		   return {/*делаем копию стейта для наших с ним преобразований*/
-		   	...state,
-        users: updateObjectArray(state.users, action.userID, "id", {followed: true} )
-        //users: state.users.map(u => {//users:[...state.users],/*записи идентичны с map()*/
-		   	 	//if (u.id === action.userID){/*если Id совпадает с экшеном то мы должны изменить наш объект (создать копию и изменить)*/
-		   	 	//	return {...u, followed: true}/*делаем ккопию и меняем в ней нужное значение*/
-		   	 //	}
-		   	 //	return u;
-		   	// })/*с помощью мапа создаем новый массив эл-тами которого будут все те же юсерсы*/
-
+		   	...state,users: state.users.map(u => {//users:[...state.users],/*записи идентичны с map()*/
+		   	 	if (u.id === action.userID){/*если Id совпадает с экшеном то мы должны изменить наш объект (создать копию и изменить)*/
+		   	 		return {...u, followed: true}/*делаем ккопию и меняем в ней нужное значение*/
+		   	 	}
+		   	 	return u;
+		   	 })/*с помощью мапа создаем новый массив эл-тами которого будут все те же юсерсы*/
 		   	  }
 
 
 		case UNFOLLOW :  
               return {
-		   	...state,
-        users:  updateObjectArray(state.users, action.userID, "id", {followed: false} )
-        // users: state.users.map(u => {
-		   	 //	if (u.id === action.userID){
-		   	 //		return {...u, followed: false}
-		   	 	//}
-		   	 	//return u;
-		   	// })
+		   	...state, users: state.users.map(u => {
+		   	 	if (u.id === action.userID){
+		   	 		return {...u, followed: false}
+		   	 	}
+		   	 	return u;
+		   	 })
 		   	  }
 
 		case SET_USERS: /*устанавливаем пользователей*/
@@ -90,36 +84,42 @@ export const toggleFollowingProgress = (isFetching, userID) => ({type:TOGGLE_IS_
 
 
 export const getUsers = (currentPage,pageSize) => {/*санк креатор-возвращает санку*/
-    return  async (dispatch) => {/*санка*/
-        dispatch(toggleIsFetching(true));/*диспатчим вызов экшн криетора  доступный из замыкания*/
-        dispatch(setCurrentPage(currentPage));
-            let data = await usersAPI.getUsers(currentPage, pageSize);/*в response приходит ответ от сервера */
-     	  dispatch(toggleIsFetching(false));/*закончился тогглинг -диспатчим вызов экшн криетор с переданным параметром*/
-        dispatch(setUsers(data.items));/*диспатчим юзеров в стейт-берется из замыкания*/
-        dispatch(setTotalUsersCount(data.totalCount));/*сетаем тотал каун юзер-из замыкания берем*/
-/*data.items-это наши юзеры*/
+
+    return  (dispatch) => {/*санка*/
+      			dispatch(toggleIsFetching(true));/*диспатчим вызов экшн криетора  доступный из замыкания*/
+      			dispatch(setCurrentPage(currentPage));
+            usersAPI.getUsers(currentPage, pageSize).then(data => {/*в response приходит ответ от сервера */
+     			dispatch(toggleIsFetching(false));/*закончился тогглинг -диспатчим вызов экшн криетор с переданным параметром*/
+      			dispatch(setUsers(data.items));/*диспатчим юзеров в стейт-берется из замыкания*/
+      			dispatch(setTotalUsersCount(data.totalCount));/*сетаем тотал каун юзер-из замыкания берем*/
+    });/*data.items-это наши юзеры*/
 }
-}
-/////////////////ОБЩАЯ ФУНКЦИЯ ДЛЯ FOLLOW/UNFOLLOW -избавляемся от дублирования//////////////////
-const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) =>{
-  dispatch(toggleFollowingProgress(true, userId));
-              let response = await apiMethod(userId);
-               if(response.data.resultCode == 0){
-               dispatch(actionCreator(userId));
-               }
-               dispatch(toggleFollowingProgress(false, userId));
 }
 
+
 export const follow = (userId) => {/*санк креатор-возвращает санку*/
-    return  async (dispatch) => {/*санка*/
-      followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followSuccess);  
+
+    return  (dispatch) => {/*санка*/
+      		  dispatch(toggleFollowingProgress(true, userId));
+              usersAPI.follow(userId).then(response =>{
+               if(response.data.resultCode == 0){
+               dispatch(followSuccess(userId));
+               }
+               dispatch(toggleFollowingProgress(false, userId));
+             });
 }
 }
 
 export const unfollow = (userId) => {/*санк креатор-возвращает санку*/
-/*дожидаться промис когда зарезолвится мы можем только в асинхронных функциях!*/
-    return  async (dispatch) => {/*санка*/
-      followUnfollowFlow(dispatch, userId,  usersAPI.unfollow.bind(usersAPI),unfollowSuccess); 
+
+    return  (dispatch) => {/*санка*/
+      		  dispatch(toggleFollowingProgress(true, userId));
+              usersAPI.unfollow(userId).then(response =>{
+               if(response.data.resultCode == 0){
+               dispatch(unfollowSuccess(userId));
+               }
+               dispatch(toggleFollowingProgress(false, userId));
+             });
 }
 }
 
