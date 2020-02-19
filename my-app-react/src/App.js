@@ -6,13 +6,14 @@ import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import {Route, withRouter} from 'react-router-dom';
+import {Route, withRouter, BrowserRouter} from 'react-router-dom';
 import Login from './components/Login/Login';
-import {connect} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import {getAuthUserData} from './redux/auth-reducer';
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
+import store from "./redux/redux-store";
 
 
 class App extends React.Component {
@@ -48,4 +49,14 @@ componentDidMount() {//проверяем инициализацию всего 
 const mapStateToProps = (state) => ({//прокидываем пропсами значение initialized для того чтобы сделать инициализацию
     initialized: state.app.initialized
 })
-export default compose(connect(mapStateToProps, {initializeApp}))(App);//композим результат
+let AppContainer = compose(connect(mapStateToProps, {initializeApp}))(App);//композим результат и записываем в переменную
+
+const MainApp = (props) => {
+   return <BrowserRouter>
+        <Provider store={store}>
+            <AppContainer />
+        </Provider>
+    </BrowserRouter>
+}
+
+export default MainApp;
