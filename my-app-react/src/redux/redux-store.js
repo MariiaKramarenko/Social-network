@@ -1,4 +1,4 @@
-import {applyMiddleware,createStore, combineReducers} from 'redux';/*импортируем из библиотеки редакс*/
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";/*импортируем из библиотеки редакс*/
 import profileReducer from "./profile-reducer.js";/*импортируем редьюсеры*/
 import dialogsReducer from "./dialogs-reducer.js";
 import sidebarReducer from "./sidebar-reducer.js";
@@ -20,8 +20,8 @@ let reducers = combineReducers({/*это как бы наш стейт и каж
 
 });/*функция склеивания/смешивания редьюсеров*/
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));/*у стора есть теперь промеж уровень для обработки thunk*/
-/*функция,создающая стор - отдаем редьюсеры стору -а именно*/
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers,  composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 window.store = store;
 
