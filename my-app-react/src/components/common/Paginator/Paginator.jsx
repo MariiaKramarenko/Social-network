@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./Paginator.module.css";
 
-let Paginator = ({totalUsersCount, pageSize, currentPage, onPageChanged}) => {
+let Paginator = ({currentPage, onPageChanged, totalUsersCount, pageSize  }) => {
     let pagesCount = Math.ceil(totalUsersCount / pageSize);
 
     let pages = [];
