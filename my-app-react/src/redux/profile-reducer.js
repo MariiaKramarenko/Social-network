@@ -56,26 +56,24 @@ export const setStatus = (status) => ({type:SET_STATUS, status})/*экшнкри
 
 export const deletePost = (postId) =>({type:DELETE_POST, postId})//делаем actionCreator для TDD-test
 
-export const getUserProfile = (userID) => (dispatch) =>{/*санккриейтор  возвращает санкудля получения профиля юзера*/
-           usersAPI.getProfile(userID).then(response => {
+export const getUserProfile = (userID) => async (dispatch) =>{/*санккриейтор  возвращает санкудля получения профиля юзера*/
+          let response = await usersAPI.getProfile(userID);
            dispatch(setUserProfile(response.data));
-    })
+
 }
 
-export const getStatus = (userID) => (dispatch) => {/*санккриетор для получения статуса юзера*/
-    profileAPI.getStatus(userID)/*обращаеся к апишке профайла и получаем статус с сервера*/
-    .then(response => {
+export const getStatus = (userID) => async (dispatch) => {/*санккриетор для получения статуса юзера*/
+    let response = await profileAPI.getStatus(userID);/*обращаеся к апишке профайла и получаем статус с сервера*/
       dispatch(setStatus(response.data));/*сетаем полученный статус*/
-    })    
+  
 }
 
 
-export const updateStatus = (status) => (dispatch) => {/*санккриетор для обновления статуса юзера*/
-    profileAPI.updateStatus(status)/*обращаеся к апишке профайла*/
-    .then(response => {
+export const updateStatus = (status) => async (dispatch) => {/*санккриетор для обновления статуса юзера*/
+    let response = await profileAPI.updateStatus(status);/*обращаеся к апишке профайла*/
       if(response.data.resultCode === 0){/*если ответ от сервера без ошибки то делаем диспатч сетстатуса*/
       dispatch(setStatus(status));/*диспатчим сет статус c переданным значением*/
-    }})    
+   
 }
-
+}
 export default profileReducer;
