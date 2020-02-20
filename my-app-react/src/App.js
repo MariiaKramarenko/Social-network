@@ -5,7 +5,7 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import UsersContainer from './components/Users/UsersContainer';
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
-import {Route, withRouter, BrowserRouter} from 'react-router-dom';
+import {Route, withRouter, HashRouter} from 'react-router-dom';
 import Login from './components/Login/Login';
 import {connect, Provider} from 'react-redux';
 import {getAuthUserData} from './redux/auth-reducer';
@@ -55,11 +55,11 @@ const mapStateToProps = (state) => ({//прокидываем пропсами �
 let AppContainer = compose(connect(mapStateToProps, {initializeApp}))(App);//композим результат и записываем в переменную
 
 const MainApp = (props) => {
-   return <BrowserRouter>
+   return <HashRouter>
         <Provider store={store}>
             <AppContainer />
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default MainApp;
