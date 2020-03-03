@@ -17,7 +17,7 @@ const AddMessageForm = (props) =>{
         </div>
      
         <div>
-            <button>Send message</button>
+            <button className="btn btn-primary">Send</button>
         </div>
     
     </form>

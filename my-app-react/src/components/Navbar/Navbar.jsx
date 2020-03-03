@@ -8,22 +8,28 @@ const Navbar = (props) => {
   return (
           <nav className={s.nav}>
              <div className={s.item}>
-                   <NavLink to="/profile" activeClassName={s.activeLink}>Profile</NavLink>
+                   <NavLink to="/profile" 
+                   activeClassName={s.activeLink} 
+                   className={s.item}>Profile</NavLink>
              </div>
              <div className={ `${s.item} ${s.active}` }>
-                   <NavLink to="/dialogs" activeClassName={s.activeLink}>Messages</NavLink>
+                   <NavLink to="/dialogs" 
+                   activeClassName={s.activeLink}
+                   className={s.item}>Messages</NavLink>
              </div>
              <div className={s.item}>
-                    <NavLink to="/users" activeClassName={s.activeLink}>Users</NavLink>
+                    <NavLink to="/users" 
+                    activeClassName={s.activeLink}
+                    className={s.item}>Users</NavLink>
              </div>
              <div className={s.item}>
-                   <a href="#">News</a>
+                   <a href="#" className={s.item}>News</a>
              </div>
              <div className={s.item}>
-                   <a href="#">Music</a>
+                   <a href="#" className={s.item}>Music</a>
              </div>
              <div className={s.item}>
-                   <a href="#">Settings</a>
+                   <a href="#" className={s.item}>Settings</a>
              </div>
          </nav>
 

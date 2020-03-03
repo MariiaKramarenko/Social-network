@@ -1,7 +1,17 @@
 .userPhoto{
-	width: 100px;
-	height: 100px;
+	width: 70px;
+	height: 70px;
 }
 .selectedPage{
 	font-weight: bold;
+}
+.user{
+	margin: 10px;
+	border:1px solid #DCDCDC;
+	border-radius: 5px;
+	width:300px;
+	margin-left: 5px;
+}
+.name{
+   margin-left: 5px;
 }

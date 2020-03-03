@@ -1,23 +1,25 @@
 .dialogs{
-  display: grid;
-  grid-template-columns: 2fr 10fr;
-}
-
-.dialogsItems{
-   padding: 25px;
-   margin:25px;
+   display: inline-block;
+   margin: 25px;
 }
 .dialog{
-	padding: 25px;
-}
-.dialog.active{
+display: block;
+margin: 20px;
+width: 50px;
 
-  color: red;
 }
 .messages{
- padding: 25px;
- margin:25px;
+  display: inline-block;
+   margin: 25px;
 }
 .message{
-  padding: 20px;
+display: block;
+
+}
+
+@media screen and  (min-width:300px) and (max-width:414px) {
+.dialog{
+display: inline-block;
+margin:9px;
+}
 }

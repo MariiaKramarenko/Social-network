@@ -101,25 +101,26 @@ export const getUsers = (currentPage,pageSize) => {/*санк креатор-в�
 }
 }
 /////////////////ОБЩАЯ ФУНКЦИЯ ДЛЯ FOLLOW/UNFOLLOW -избавляемся от дублирования//////////////////
-const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) =>{
-  dispatch(toggleFollowingProgress(true, userId));
-              let response = await apiMethod(userId);
-               if(response.data.resultCode == 0){
-               dispatch(actionCreator(userId));
-               }
-               dispatch(toggleFollowingProgress(false, userId));
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
+    dispatch(toggleFollowingProgress(true, userId));
+    let response = await apiMethod(userId);
+
+    if (response.data.resultCode == 0) {
+        dispatch(actionCreator(userId));
+    }
+    dispatch(toggleFollowingProgress(false, userId));
 }
 
-export const follow = (userId) => {/*санк креатор-возвращает санку*/
+export const follow = (userID) => {/*санк креатор-возвращает санку*/
     return  async (dispatch) => {/*санка*/
-      followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followSuccess);  
+      followUnfollowFlow(dispatch, userID, usersAPI.follow.bind(usersAPI), followSuccess);  
 }
 }
 
-export const unfollow = (userId) => {/*санк креатор-возвращает санку*/
+export const unfollow = (userID) => {/*санк креатор-возвращает санку*/
 /*дожидаться промис когда зарезолвится мы можем только в асинхронных функциях!*/
     return  async (dispatch) => {/*санка*/
-      followUnfollowFlow(dispatch, userId,  usersAPI.unfollow.bind(usersAPI),unfollowSuccess); 
+      followUnfollowFlow(dispatch, userID,  usersAPI.unfollow.bind(usersAPI),unfollowSuccess); 
 }
 }
 

@@ -45,5 +45,5 @@ let mapDispatchToProps = (dispatch) => {/*тут передадим коллбе
 
 export default compose(
   connect(mapStateToProps,mapDispatchToProps),
-  withAuthRedirect
+ withAuthRedirect
   )(Dialogs);/*функция компоуз-берет Dialogs закидывает в withAuthRedirect и полученный результат закидывает в connect*/

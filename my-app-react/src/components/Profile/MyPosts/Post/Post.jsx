@@ -4,7 +4,7 @@ import s from './Post.module.css';
 const Post =(props) =>{
 	return (            
               <div className={s.item}>
-              <img src="https://klike.net/uploads/posts/2019-03/1551511862_28.jpg" />
+              <img src="https://image.flaticon.com/icons/svg/2602/2602014.svg"/>
               {props.message}
               <div>
               <span>Likes  {props.likesCount}</span> 

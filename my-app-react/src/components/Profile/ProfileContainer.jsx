@@ -55,6 +55,6 @@ export default compose(/*функция компоуз берет ProfileContain
   результат этого оборачивает в connect*/
   connect(mapStateToProps,{getUserProfile, getStatus, updateStatus}),
   withRouter,
-  //withAuthRedirect
+  withAuthRedirect
   )(ProfileContainer);
 

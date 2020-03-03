@@ -1,20 +1,58 @@
 .app-wrapper{
   display: grid;
-  max-width: 1200px;
+  max-width:1200px;
   margin: 0 auto;
   grid-template-areas: 
   "h h "
   "n c";
-  grid-template-rows: 60px 1fr;
-  grid-template-columns: 2fr 10fr;
+
+  grid-template-columns: 1fr 11fr;
+  grid-template-rows: 1fr 11fr;
   grid-gap: 10px;
 }
 
 .app-wrapper-content{	
 	display: grid;
 	grid-area: c;
-	background-color: #E6E6E6;
+	background-color: #F2F2F2;
 
 }
+@media screen and (max-device-width: 320px) {
+  .app-wrapper{
+     grid-template-areas: 
+     "h"
+     "n"
+     "c"
+      ;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 1fr;
+   }
+ }
+   @media screen and (device-width: 375px) {
+    .app-wrapper{
+     grid-template-areas: 
+     "h"
+     "n"
+     "c"
+      ;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 1fr;
+   }
+   }
+    @media screen and (device-width: 414px) {
+    .app-wrapper{
+     grid-template-areas: 
+     "h"
+     "n"
+     "c"
+      ;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 1fr;
+   }
+   }
+
+   @media screen and (device-width: 1024px) {
+
+   }
 
 

@@ -6,16 +6,16 @@ import {required, maxLengthCreator} from '../../../utils/validators/validators';
 import {Textarea} from '../../common/FormsControls/FormsControls';
 
 
-const maxLength10 = maxLengthCreator(10);/*криетор проверки формы на длину символов*/
+const maxLength10 = maxLengthCreator(1000);/*криетор проверки формы на длину символов*/
 
 const AddNewPostForm = (props) =>{/*выносим форму в отдельную компоненту*/
  return (
-         <form onSubmit={props.handleSubmit}>
+         <form  onSubmit={props.handleSubmit}>
             <div>
-              <Field validate={[required, maxLength10]} placeholder={"Send your post"} name={"newPostText"} component={Textarea}/>
+              <Field className="form-control" validate={[required, maxLength10]} placeholder={"Send your post"} name={"newPostText"} component={Textarea}/>
             </div>
             <div>
-              <button className={s.addpost}>Add post</button>
+              <button className="btn btn-primary">Add post</button>
             </div>
           </form>
           )

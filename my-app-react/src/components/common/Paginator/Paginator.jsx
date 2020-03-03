@@ -18,26 +18,28 @@ let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portion
     let rightPortionPageNumber = portionNumber * portionSize;//определяем значение правой кнопки порции страниц
 
 
-    return <div className={styles.paginator}>
+return <nav aria-label="Page navigation example">
+        <ul class="pagination">
         { portionNumber > 1 && //если номер порции больше 1 тогда показываем кнопку PREV -которая переключает на предыдущую порцию
-        <button onClick={() => { setPortionNumber(portionNumber - 1) }}>PREV</button> }
+        <button className="btn-sm btn-primary" onClick={() => { setPortionNumber(portionNumber - 1) }}>PREV</button> }
 
             {pages //выводим номера страничек с пользователями
                 .filter(p => p >= leftPortionPageNumber && p<=rightPortionPageNumber)//фильтруем левый и правы номера страниц
                 .map((p) => {//если номер больше либо равен числу левого номера порции и меньше или равен правого числа номера порции
-                return <span className={ cn({//тогда возвращаем span кот содержит стили и если фильтрация вернула true то 
+                return <li className={ cn({//тогда возвращаем span кот содержит стили и если фильтрация вернула true то 
                     [styles.selectedPage]: currentPage === p//текущая страница равна той что фильтруется
                 }, styles.pageNumber) }
                              key={p}//применяем обязательно key
                              onClick={(e) => {//добавляем функцию кот по клику показывает пользователей текущей страницы
                                  onPageChanged(p);
-                             }}>{p}</span>
+                             }}>{p}</li>
             })}
-                { portionCount > portionNumber && //когда  тогда показываем кнопку NEXT-кот переключает на следующую порцию с пользователями
-    <button onClick={() => { setPortionNumber(portionNumber + 1) }}>NEXT</button> }
+                                { portionCount > portionNumber && //когда  тогда показываем кнопку NEXT-кот переключает на следующую порцию с пользователями
+    <button className="btn-sm btn-primary" onClick={() => { setPortionNumber(portionNumber + 1) }}>NEXT</button> }
 
 
-    </div>
+   </ul>
+    </nav>
 
 }
 

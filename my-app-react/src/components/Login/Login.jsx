@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import {login} from '../../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
 import styles from "./../common/FormsControls/FormControls.module.css";
+import {Button} from 'react-bootstrap';
+
 /*Field-компонента,пришедшая к нам их редакс-форм
 name-считывает введенные значение и называет данный инпут
 component-обозначает тип 
@@ -13,18 +15,20 @@ handleSubmit-обрабатывает форму,приходит из проп�
 */
 const LoginForm = (props) => {
   return <form onSubmit={props.handleSubmit} >
+       <div className="form-group">
         <div>
-          <Field validate={[required]} placeholder={"Email"} name={"email"} component={Input} />
+          <Field validate={[required]} placeholder={"Email"} name={"email"} component={Input} className="form-control col-md-3"/>
         </div>
         <div>
-          <Field  validate={[required]} placeholder={"Password"} name={"password"} type={"password"} component={Input}/>
+          <Field  validate={[required]} placeholder={"Password"} name={"password"} type={"password"} component={Input} className="form-control col-md-3"/>
         </div>
-        <div>
-          <Field type={"checkbox"} name={"rememberMe"} component={Input} /> remember me
-        </div>
+
+          <Field type={"checkbox"} name={"rememberMe"} component={Input}  className="form-check-label"/> remember me
+
         { props.error && <div className={styles.formSummaryError}>{props.error}</div>}
         <div>  
-          <button>Login</button>
+          <button className="btn btn-primary">Login</button>
+        </div>
         </div>
       </form>
 }
@@ -44,7 +48,7 @@ const Login = (props) => {
     return <Redirect to={"/profile"} />
   }
   return <div>
-        <h2>LOGIN</h2>
+        <h5>Login to your account</h5>
           <LoginReduxForm onSubmit={onSubmit}/>
         </div>
 }
