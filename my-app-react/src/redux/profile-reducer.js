@@ -4,6 +4,8 @@ const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';//делаем action.type для TDD-test
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';//для загрузки фотки юзера
+
 
 let initialState = {/*инициализируемый стейт-то есть тот что передается при входе*/
     posts:[
@@ -42,20 +44,24 @@ const profileReducer = (state = initialState , action) => {
       case DELETE_POST: {
           return {...state, posts: state.posts.filter(p => p.id != action.postId)}; 
       }
+      case SAVE_PHOTO_SUCCESS: {
+          return {...state, profile:{...state.profile, photos: action.photos}}; 
+      }
           
       default:
           return state;
 }
 }
-
+/*//////экшн-криеторы///////////*/
 export const addPostActionCreator = (newPostText) => ({type: ADD_POST, newPostText})/*экшнкриейтор кот возвращает тип экшена ADD_POST*/
-
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
-
 export const setStatus = (status) => ({type:SET_STATUS, status})/*экшнкриетор для установки статуса*/
-
 export const deletePost = (postId) =>({type:DELETE_POST, postId})//делаем actionCreator для TDD-test
+export const savePhotoSuceess = (photos) =>({type:SAVE_PHOTO_SUCCESS, photos})//делаем actionCreator для отпрвки аватра юзера
 
+
+
+/*/////санк-криеторы///////////*/
 export const getUserProfile = (userID) => async (dispatch) =>{/*санккриейтор  возвращает санкудля получения профиля юзера*/
           let response = await usersAPI.getProfile(userID);
            dispatch(setUserProfile(response.data));
@@ -73,6 +79,14 @@ export const updateStatus = (status) => async (dispatch) => {/*санккрие�
     let response = await profileAPI.updateStatus(status);/*обращаеся к апишке профайла*/
       if(response.data.resultCode === 0){/*если ответ от сервера без ошибки то делаем диспатч сетстатуса*/
       dispatch(setStatus(status));/*диспатчим сет статус c переданным значением*/
+   
+}
+}
+
+export const savePhoto = (file) => async (dispatch) => {/*санккриетор для отправки фотто юзера*/
+    let response = await profileAPI.savePhoto(file);/*отправляем фото на сервер*/
+      if(response.data.resultCode === 0){/*если ответ от сервера без ошибки то делаем диспатч фокти*/
+      dispatch(savePhotoSuceess(response.data.data.photos));/*отправляем фотку на сервер */
    
 }
 }

@@ -37,6 +37,17 @@ export const profileAPI = {
     },
     updateStatus(status){/*как называется параметр в объекте:смотреть апишку в нашем случае status:status*/
              return instance.put(`profile/status/`, {status:status});
+    },
+    savePhoto(photoFile) {
+        const formData = new FormData();
+        formData.append("image", photoFile);
+
+        return instance.put(`profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+//второй параметр-formData объек ко содержит форму данных передавааемых на сервер,3й парам- специфические заголовки именно дя этого запроса
     }
 }
 
