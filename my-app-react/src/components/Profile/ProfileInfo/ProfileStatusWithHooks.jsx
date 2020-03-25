@@ -59,7 +59,7 @@ return(
 <div>
   {!editMode && /*если значение false &&-тогда выполняет логику с пом. аттрибута onDoubleClick вызываем метод класса*/
   <div>
-    <span onDoubleClick={activateEditMode}> {props.status || "no status"}</span>
+    <b>Status:</b><span onDoubleClick={activateEditMode}> {props.status || "no status"}</span>
   </div>
   }
   {editMode && /*если значение true &&-тогда выполняем логику посредством аттрибута onBlur- при фокусе срабатывает метод класса*/
