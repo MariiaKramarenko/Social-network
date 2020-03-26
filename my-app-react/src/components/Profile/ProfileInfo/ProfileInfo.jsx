@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './ProfileInfo.module.css';
 import Preloader from '../.././common/Preloader/Preloader.jsx'; 
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 import userPhoto from "../../../assets/images/User.png";
+import ProfileForm from "./ProfileForm.jsx";
 
 ///Contacts:{Object.keys(profile.contacts)} -итерируемся по объекту-в метод keys засунули объект,ключи которого нужно получить
 //Object.keys пробегается по объекту и названия свойств объекта обернет в массив строк, которые мы отобразим потом через пропсы
 const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto }) => {
+   
+   let [editMode, setEditMode] = useState(false);//юзаем хук useState для определения начение редактирования
 
     if (!profile) {
         return <Preloader />
@@ -26,7 +29,9 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto }) => {
 
                 <div>
                 <div>
-                <ProfileData profile={profile}/>
+                {editMode 
+                ? <ProfileForm profile={profile} /> 
+                :<ProfileData profile={profile} isOwner={isOwner} goToEditMode={ () => {setEditMode(true)} } />}
 
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
             </div>
@@ -40,8 +45,9 @@ const Contact = ({contactTitle, contactValue}) =>{
     return <div>{contactTitle} : {contactValue}</div>
 }
 
-const ProfileData=({profile})=>{
+const ProfileData=({profile, isOwner, goToEditMode})=>{
    return  <div>
+               {isOwner && <div><button onClick={goToEditMode} > Edit my information </button></div>}
                 <div>
                 <b>Full name:</b> {profile.fullName}
                 </div>
@@ -63,6 +69,7 @@ const ProfileData=({profile})=>{
                   </div>
                 </div>
 }
+
 
 
 export default ProfileInfo;
