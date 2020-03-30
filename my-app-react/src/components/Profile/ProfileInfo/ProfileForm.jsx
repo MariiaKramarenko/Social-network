@@ -4,7 +4,7 @@ import {createField, Input, Textarea} from "../../common/FormsControls/FormsCont
 import {reduxForm} from "redux-form";
 import style from "../../common/FormsControls/FormControls.module.css";
 
-const ProfileDataForm = ({handleSubmit, profile, error}) => {
+const ProfileForm = ({handleSubmit, profile, error}) => {
     return <form onSubmit={handleSubmit}>
         <div><button>save</button></div>
         {error && <div className={style.formSummaryError}>
@@ -38,6 +38,6 @@ const ProfileDataForm = ({handleSubmit, profile, error}) => {
     </form>
 }
 
-const ProfileDataFormReduxForm = reduxForm({form: 'edit-profile'})(ProfileDataForm)
+const ProfileDataFormReduxForm = reduxForm({form: 'edit-profile'})(ProfileForm)
 
 export default ProfileDataFormReduxForm;

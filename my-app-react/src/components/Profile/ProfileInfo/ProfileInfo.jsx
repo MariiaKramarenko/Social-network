@@ -7,7 +7,7 @@ import ProfileForm from "./ProfileForm.jsx";
 
 ///Contacts:{Object.keys(profile.contacts)} -итерируемся по объекту-в метод keys засунули объект,ключи которого нужно получить
 //Object.keys пробегается по объекту и названия свойств объекта обернет в массив строк, которые мы отобразим потом через пропсы
-const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto }) => {
+const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
    
    let [editMode, setEditMode] = useState(false);//юзаем хук useState для определения начение редактирования
 
@@ -20,7 +20,10 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto }) => {
             savePhoto(e.target.files[0]);//вызываем коллбек и передааем во внешний мир наш выбранный файл на компьютере
         }
     }
-
+    const onSubmit = (formData) => {
+       saveProfile(formData);//вызываем коллбек который сохраняет на сервере даннные введенные в форму
+       setEditMode(false);//выходим из режима редактирования
+    }
     return (
         <div>
             <div className={s.descriptionBlock}>
@@ -30,8 +33,8 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto }) => {
                 <div>
                 <div>
                 {editMode 
-                ? <ProfileForm profile={profile} /> 
-                :<ProfileData profile={profile} isOwner={isOwner} goToEditMode={ () => {setEditMode(true)} } />}
+                ? <ProfileForm initialValues={profile} profile={profile} onSubmit={onSubmit} /> 
+                : <ProfileData profile={profile} isOwner={isOwner} goToEditMode={ () => {setEditMode(true)} } />}
 
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
             </div>
@@ -45,7 +48,7 @@ const Contact = ({contactTitle, contactValue}) =>{
     return <div>{contactTitle} : {contactValue}</div>
 }
 
-const ProfileData=({profile, isOwner, goToEditMode})=>{
+const ProfileData=({profile, isOwner, goToEditMode})=>{// даннst юзера если мы в статусе редактирования то высветится форма для изменения данных 
    return  <div>
                {isOwner && <div><button onClick={goToEditMode} > Edit my information </button></div>}
                 <div>

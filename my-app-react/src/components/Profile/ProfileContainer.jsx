@@ -3,7 +3,7 @@ import s from './Profile.module.css';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import * as axios from 'axios';
-import {getUserProfile, getStatus, updateStatus, savePhoto} from '../../redux/profile-reducer';
+import {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile} from '../../redux/profile-reducer';
 import {withRouter, Redirect} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
@@ -65,7 +65,7 @@ isAuth:state.auth.isAuth
 export default compose(/*функция компоуз берет ProfileContainer оборачивает в withAuthRedirect 
   результат этого оборачивает в withRouter
   результат этого оборачивает в connect*/
-  connect(mapStateToProps,{getUserProfile, getStatus, updateStatus, savePhoto}),
+  connect(mapStateToProps,{getUserProfile, getStatus, updateStatus, savePhoto, saveProfile}),
   withRouter,
   withAuthRedirect
   )(ProfileContainer);

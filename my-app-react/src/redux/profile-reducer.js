@@ -90,4 +90,15 @@ export const savePhoto = (file) => async (dispatch) => {/*санккриетор
    
 }
 }
+
+//санк-криетор для отправки отредактированной информации профиля с помою формы кот их собирает на сервер
+export const saveProfile = (profile) => async (dispatch, getState) =>{
+    const userId = getState().auth.userId;//достанем айди пользователя текущего которого данные мы изменили
+    const response = await profileAPI.saveProfile(profile);
+    //нам не запрещено в рамках одного редьюсера обращаться к другим редьюсерам или стейту глобальному тожн
+    if (response.data.resultCode === 0){/*если ответ от сервера без ошибки то делаем диспатч данных */
+    dispatch(getUserProfile(userId));//диспатчим получение профиля юзера(так как мы забросили эти данные на сервер то нам прийдет обновленный уже профиль юзера)
+}
+}
+
 export default profileReducer;
