@@ -59,12 +59,18 @@ export const authAPI ={/*объект в апишке отвечающий за 
      me(){
             return instance.get(`auth/me`);
     },
-     login(email, password, rememberMe = false){/*вместе с post запросом мы отправляем на сервак данные вторым парамером как объект(для put и post мы передаем объект данных)*/
-            return instance.post(`auth/login`, {email, password, rememberMe});
+     login(email, password, rememberMe = false, captcha = null){/*вместе с post запросом мы отправляем на сервак данные вторым парамером как объект(для put и post мы передаем объект данных)*/
+            return instance.post(`auth/login`, {email, password, rememberMe, captcha});
     },
      logout(){/*вылогиниваемся*/
             return instance.delete(`auth/login`);/*delete запрос удалит на сервере данные логинизации*/
     }
 
+}
+
+export const securityAPI={
+    getCaptchaUrl(){
+        return instance.get(`security/get-captcha-url`);
+    }
 }
 
