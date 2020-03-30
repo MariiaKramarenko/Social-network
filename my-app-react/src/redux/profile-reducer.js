@@ -1,5 +1,5 @@
 import {usersAPI, profileAPI}from '../api/api.js';
-
+import {stopSubmit} from 'redux-form';
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
@@ -98,7 +98,11 @@ export const saveProfile = (profile) => async (dispatch, getState) =>{
     //нам не запрещено в рамках одного редьюсера обращаться к другим редьюсерам или стейту глобальному тожн
     if (response.data.resultCode === 0){/*если ответ от сервера без ошибки то делаем диспатч данных */
     dispatch(getUserProfile(userId));//диспатчим получение профиля юзера(так как мы забросили эти данные на сервер то нам прийдет обновленный уже профиль юзера)
+} else {
+    dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0] }));
+        return Promise.reject(response.data.messages[0]);
+    }
 }
-}
+
 
 export default profileReducer;

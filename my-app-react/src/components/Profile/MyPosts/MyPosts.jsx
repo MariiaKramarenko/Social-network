@@ -31,7 +31,7 @@ const MyPosts = React.memo(props=> {/*React.memo - hok,на входе прин�
 
 let postsElements = /*орисовываем (мапим) посты путем преобразования массива posts в jsx элемент*/
     props.posts.map( p =>
-      <Post message={p.message} likesCount={p.likesCount}/>
+      <Post key={p.id} message={p.message} likesCount={p.likesCount}/>
       );
 let onAddPost = (values) => {/*функция добавления поста на стену*/
    props.addPost(values.newPostText);/*вызываем коллбек который задиспатчит значение нового поста пришедшее из onSubmit*/

@@ -20,9 +20,12 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, savePro
             savePhoto(e.target.files[0]);//вызываем коллбек и передааем во внешний мир наш выбранный файл на компьютере
         }
     }
-    const onSubmit = (formData) => {
-       saveProfile(formData);//вызываем коллбек который сохраняет на сервере даннные введенные в форму
-       setEditMode(false);//выходим из режима редактирования
+     const onSubmit = (formData) => {
+        saveProfile(formData).then(//сохраняем измененые данные на сервере
+            () => {//после этого только
+                setEditMode(false);//выходим из режима редактирования
+            }
+        );
     }
     return (
         <div>
