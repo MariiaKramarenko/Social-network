@@ -5,7 +5,7 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import UsersContainer from './components/Users/UsersContainer';
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
-import {Route, withRouter, HashRouter} from 'react-router-dom';
+import {Route, withRouter, Redirect, Switch, BrowserRouter} from 'react-router-dom';
 import Login from './components/Login/Login';
 import {connect, Provider} from 'react-redux';
 import {getAuthUserData} from './redux/auth-reducer';
@@ -22,10 +22,18 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 
 class App extends React.Component {
 
-componentDidMount() {//проверяем инициализацию всего приложения через initializeApp кот находится в app-reducer
+catchAllUnhandledErrors = (reason, promise) => {//метод,отлавливающий ошибки от сервера (причина и ответ)
+        alert("Some error occured");//вывод сообщения об ошибке
+        //console.error(promiseRejectionEvent);
+    }
+    componentDidMount() {//метод жз
         this.props.initializeApp();
-}
-
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);//добавляем отлов ошибки
+    }//добавили слушателя (listener) на глобальный объект window , когда произойдет событие "unhandledrejection" тогда вызывается метод
+//помним что если используем  addEventListener то всегда нужно делать и  removeEventListener  
+    componentWillUnmount() {//метод жз
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);//удаляем отлов ошибки
+    }
  render() {//составим условие для инициализации приложения
           if (!this.props.initialized) {//если инициализация вернула false тогда высвечиваем прокрутку(прелоадер компонента)
             return <Preloader/>
@@ -37,6 +45,8 @@ componentDidMount() {//проверяем инициализацию всего 
       <HeaderContainer />
       <Navbar />
       <div className="app-wrapper-content">
+      <Switch>
+      <Route exact path='/' render={() => <Redirect to={"/profile"}/>}/>
         <Route path='/profile/:userID?'  render={withSuspense(ProfileContainer)}  />
 
         <Route path='/dialogs'  render={withSuspense(DialogsContainer)} />
@@ -44,6 +54,9 @@ componentDidMount() {//проверяем инициализацию всего 
         <Route path='/users' render={ () => <UsersContainer />} />
         
         <Route path='/login' render={ () => <Login />} />
+
+        <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
+        </Switch>
       </div>
     </div>
 
@@ -56,11 +69,11 @@ const mapStateToProps = (state) => ({//прокидываем пропсами �
 let AppContainer = compose(connect(mapStateToProps, {initializeApp}))(App);//композим результат и записываем в переменную
 
 const MainApp = (props) => {
-   return <HashRouter>
+   return <BrowserRouter>
         <Provider store={store}>
             <AppContainer />
         </Provider>
-    </HashRouter>
+    </BrowserRouter>
 }
 
 export default MainApp;

@@ -19,7 +19,7 @@ let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portion
 
 
 return <nav aria-label="Page navigation example">
-        <ul class="pagination">
+        <ul className={cn(styles.pagination)}>
         { portionNumber > 1 && //если номер порции больше 1 тогда показываем кнопку PREV -которая переключает на предыдущую порцию
         <button className="btn-sm btn-primary" onClick={() => { setPortionNumber(portionNumber - 1) }}>PREV</button> }
 

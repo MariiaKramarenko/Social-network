@@ -13,7 +13,8 @@ const appReducer = (state = initialState, action) => {// компонента-р
         case INITIALIZED_SUCCESS:
             return {
                 ...state,
-                initialized: true
+                initialized: true,
+                globalError: null
             }
 
         default:

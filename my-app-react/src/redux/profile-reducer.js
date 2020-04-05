@@ -76,12 +76,18 @@ export const getStatus = (userID) => async (dispatch) => {/*санккрието
 
 
 export const updateStatus = (status) => async (dispatch) => {/*санккриетор для обновления статуса юзера*/
-    let response = await profileAPI.updateStatus(status);/*обращаеся к апишке профайла*/
-      if(response.data.resultCode === 0){/*если ответ от сервера без ошибки то делаем диспатч сетстатуса*/
-      dispatch(setStatus(status));/*диспатчим сет статус c переданным значением*/
+    try {
+        let response = await profileAPI.updateStatus(status);/*обращаеся к апишке профайла*/
+         if (response.data.resultCode === 0) {//если ответ сервера без ошибки
+            dispatch(setStatus(status));//диспатчим статус в стор
+        }
+    } catch(error) {
+        //ловим ошибку от сервера тут должна быть логика
+    }
+}/*диспатчим сет статус c переданным значением*/
    
-}
-}
+
+
 
 export const savePhoto = (file) => async (dispatch) => {/*санккриетор для отправки фотто юзера*/
     let response = await profileAPI.savePhoto(file);/*отправляем фото на сервер*/
