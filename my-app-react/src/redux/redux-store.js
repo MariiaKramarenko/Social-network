@@ -1,9 +1,9 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";/*импортируем из библиотеки редакс*/
-import profileReducer from "./profile-reducer.js";/*импортируем редьюсеры*/
-import dialogsReducer from "./dialogs-reducer.js";
-import sidebarReducer from "./sidebar-reducer.js";
-import usersReducer from "./users-reducer.js";
-import authReducer from "./auth-reducer.js";
+import profileReducer from "./profile-reducer";/*импортируем редьюсеры*/
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
+import usersReducer from "./users-reducer";
+import authReducer from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";/*Middleware импорт слоя для обработки санок*/
 import { reducer as formReducer} from "redux-form";/*импорт редьюсера для создания форм*/
 import appReducer from "./app-reducer";

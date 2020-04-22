@@ -1,5 +1,6 @@
-import {usersAPI} from '../api/api.js';
-import {updateObjectArray} from '../utils/object-helper.js';
+import {usersAPI} from '../api/api';
+import {updateObjectArray} from '../utils/object-helper';
+import {PhotosType, UserType} from "../types/types";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -8,17 +9,49 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
+/////TYPES////////////////////////////////////
+export  type InitialStateType= typeof initialState;//типизация для стейта
 
+type FollowSuccessActionType={
+    type:typeof FOLLOW
+    userID:number
+}
+type UnfollowSuccessActionType={
+    type:typeof UNFOLLOW
+    userID:number
+}
+type SetUsersActionType={
+    type:typeof SET_USERS
+    users: Array<UserType>
+}
+type SetCurrentPageActionType={
+    type:typeof SET_CURRENT_PAGE
+    currentPage:number
+}
+type SetTotalUsersCountActionType={
+     type:typeof SET_TOTAL_USERS_COUNT
+     count: number
+}
+type ToggleIsFetchingActionType ={
+    type:typeof TOGGLE_IS_FETCHING
+    isFetching:boolean
+}
+type ToggleFollowingProgressActionType={
+    type:typeof TOGGLE_IS_FOLLOWING_PROGRESS
+    isFetching:boolean
+    userID:number
+}
+//////END OF TYPES////////////////////////////
 let initialState = {
-	users: [],
+	users: []as Array<UserType>,//типизация массива users
 	pageSize: 5,
 	totalUsersCount: 0,
 	currentPage:1,
 	isFetching:true,
-	followingInProgress: []
+	followingInProgress: [] as Array<number> //тип-массив в котором сидят id юзеров.
 }
 
-const usersReducer = (state = initialState, action) => 
+const usersReducer = (state = initialState, action:any):InitialStateType =>
 {
 	switch (action.type){
 		case FOLLOW : 
@@ -79,18 +112,18 @@ const usersReducer = (state = initialState, action) =>
 }
 
 
-export const followSuccess = (userID) => ( { type: FOLLOW, userID } )/*экшнкриейтор для добавления в друзья пользователя*/
+export const followSuccess = (userID:number):FollowSuccessActionType => ( { type: FOLLOW, userID } )/*экшнкриейтор для добавления в друзья пользователя*/
 /*userID нам нужен чобы знать,какого именно пользователя нам нужно добавить/удалить*/
-export const unfollowSuccess = (userID) => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
-export const setUsers = (users) =>( {type: SET_USERS, users} )/*экшн установления юзеров*/
-export const setCurrentPage = (currentPage) => ( {type:SET_CURRENT_PAGE, currentPage } )/*экшн кот меняет странички*/
-export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount})
-export const toggleIsFetching = (isFetching) => ({type:TOGGLE_IS_FETCHING, isFetching})
-export const toggleFollowingProgress = (isFetching, userID) => ({type:TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID})
+export const unfollowSuccess = (userID:number):UnfollowSuccessActionType => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
+export const setUsers = (users: Array<UserType>):SetUsersActionType =>( {type: SET_USERS, users} )/*экшн установления юзеров*/
+export const setCurrentPage = (currentPage:number):SetCurrentPageActionType => ( {type:SET_CURRENT_PAGE, currentPage } )/*экшн кот меняет странички*/
+export const setTotalUsersCount = (totalUsersCount:number) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount})
+export const toggleIsFetching = (isFetching:boolean):ToggleIsFetchingActionType => ({type:TOGGLE_IS_FETCHING, isFetching})
+export const toggleFollowingProgress = (isFetching:boolean, userID:number):ToggleFollowingProgressActionType => ({type:TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID})
 
 
-export const getUsers = (currentPage,pageSize) => {/*санк креатор-возвращает санку*/
-    return  async (dispatch) => {/*санка*/
+export const getUsers = (currentPage:number,pageSize:number) => {/*санк креатор-возвращает санку*/
+    return  async (dispatch:any) => {/*санка*/
         dispatch(toggleIsFetching(true));/*диспатчим вызов экшн криетора  доступный из замыкания*/
         dispatch(setCurrentPage(currentPage));
             let data = await usersAPI.getUsers(currentPage, pageSize);/*в response приходит ответ от сервера */
@@ -101,7 +134,7 @@ export const getUsers = (currentPage,pageSize) => {/*санк креатор-в�
 }
 }
 /////////////////ОБЩАЯ ФУНКЦИЯ ДЛЯ FOLLOW/UNFOLLOW -избавляемся от дублирования//////////////////
-const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
+const followUnfollowFlow = async (dispatch:any, userId:number, apiMethod:any, actionCreator:any) => {
     dispatch(toggleFollowingProgress(true, userId));
     let response = await apiMethod(userId);
 
@@ -111,15 +144,15 @@ const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) =>
     dispatch(toggleFollowingProgress(false, userId));
 }
 
-export const follow = (userID) => {/*санк креатор-возвращает санку*/
-    return  async (dispatch) => {/*санка*/
+export const follow = (userID:number) => {/*санк креатор-возвращает санку*/
+    return  async (dispatch:any) => {/*санка*/
       followUnfollowFlow(dispatch, userID, usersAPI.follow.bind(usersAPI), followSuccess);  
 }
 }
 
-export const unfollow = (userID) => {/*санк креатор-возвращает санку*/
+export const unfollow = (userID:number) => {/*санк креатор-возвращает санку*/
 /*дожидаться промис когда зарезолвится мы можем только в асинхронных функциях!*/
-    return  async (dispatch) => {/*санка*/
+    return  async (dispatch:any) => {/*санка*/
       followUnfollowFlow(dispatch, userID,  usersAPI.unfollow.bind(usersAPI),unfollowSuccess); 
 }
 }

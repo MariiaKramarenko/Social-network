@@ -1,4 +1,4 @@
-import {authAPI, securityAPI} from '../api/api.js';
+import {authAPI, securityAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
 
 //редьюсер авторизации в нашем приложении
@@ -6,16 +6,39 @@ import {stopSubmit} from 'redux-form';
 const SET_USER_DATA = 'my-first-network/auth/SET_USER_DATA';//уникализируем путь для срабатывания action
 const GET_CAPTCHA_URL_SUCCESS = 'my-first-network/auth/GET_CAPTCHA_URL_SUCCESS';
 
+////////////TYPES/////////////////////////////////////////////
+
+type SetAuthUserDataActionPayloadType ={ //типизация для обьекта payload
+    userId:number | null
+    email:string | null
+    login:string | null
+    isAuth:boolean | null
+}
+export type InitialStateType = typeof initialState;//тип создается сам посредством наследования от объекта этого типа
+
+type SetAuthUserDataActionType ={ //типизация для actioncreator setAuthUserData
+    type: typeof SET_USER_DATA
+    payload: SetAuthUserDataActionPayloadType
+ }
+
+type GetCaptchaUrlSuccessActionType ={
+    type:typeof GET_CAPTCHA_URL_SUCCESS
+    payload:{captchaUrl:string}
+}
+/////END OF TYPES/////////////////////////////////////////////
+
+
+
 let initialState = {//начальный стейт с данными для авторизации в приложении
-   userId:null ,
-   email:null ,
-   login:null ,
+   userId:null as number | null,//as -воспринимай либо как number либо как null
+   email:null as string | null,
+   login:null as string | null,
    isAuth:false,
-   captchaUrl: null
+   captchaUrl: null as string | null
 
 };
 
-const authReducer = (state = initialState, action) => {//компонента-редьюсер
+const authReducer = (state = initialState, action:any):InitialStateType => {//компонента-редьюсер
 /*всегда все данные которые нужны для преобразования в reducer всегда лежат в action!*/
 	switch(action.type){ 
     case GET_CAPTCHA_URL_SUCCESS :   
@@ -28,18 +51,22 @@ const authReducer = (state = initialState, action) => {//компонента-р
 	    default:
     return state;
 }
-}
+};
 
-export const setAuthUserData = (userId,email,login,isAuth) =>({type:SET_USER_DATA, payload: {userId,email,login,isAuth} })/*экшнкриэйтор для отправки сообщения*/
+export const setAuthUserData = (userId:number | null,email:string | null,login:string | null,isAuth:boolean | null):SetAuthUserDataActionType => ({
+    type:SET_USER_DATA,
+    payload: {userId,email,login,isAuth} });/*экшнкриэйтор для отправки сообщения*/
+
+
 
 //экшнкриетор для получения капчи с сервера
-export const getCaptchaUrlSuccess= (captchaUrl) =>({
+export const getCaptchaUrlSuccess= (captchaUrl:string):GetCaptchaUrlSuccessActionType =>({
   type:GET_CAPTCHA_URL_SUCCESS, payload:{captchaUrl}//диспатчим(вставляем) в стейт полученный url санки с сервера
 });
 
 
 
-export const getAuthUserData = () => async (dispatch) => {/*санк-криейтор для получения данных о залогиненном юзере*/
+export const getAuthUserData = () => async (dispatch:any) => {/*санк-криейтор для получения данных о залогиненном юзере*/
    /*помним что как результат работы асинхронной функции вернется промис*/
    let response = await authAPI.me();/*запрос на сервер на me, ожидаем промис с пом await*/
      /*присваиваем переменной rensponse тот response кот вернул нам await*/
@@ -47,13 +74,13 @@ export const getAuthUserData = () => async (dispatch) => {/*санк-крией�
       let {id,email,login} = response.data.data;/*а значит что мы  берем все данные из респонса сервера и диспатчим(вызываем)их установку*/
     dispatch(setAuthUserData(id,email,login,true));/*напомню что setAuthUserData записывает в state пришедшие ему данные юзера (мы логинимся в апишке и там в куке они сидят) */
     }
-}
+};
 
 
 
 
 
-export const login = (email, password, rememberMe, captcha) => async (dispatch) => {/*санк-криейтор для получения данных для входа(логина)*/
+export const login = (email:string, password:string, rememberMe:boolean, captcha:string) => async (dispatch:any) => {/*санк-криейтор для получения данных для входа(логина)*/
    /*!!!!!!!!!!!ВАЖНО: функция кот содержит await должна быть async!!!!!!!!!!*/
    let response = await authAPI.login(email, password, rememberMe, captcha);/*запрос на сервер на login и передаем данные для логинизации*/
     /*присваиваем переменной rensponse тот response кот вернул нам await*/
@@ -70,26 +97,26 @@ export const login = (email, password, rememberMe, captcha) => async (dispatch) 
     dispatch(stopSubmit("login", {_error: messages}));/*первое значение-какую форму мы останавливаем на проверку(_error-значение для всех полей общее),второй парам- объект с проверяемыми значениями(поля формы)*/
     }
 
-}
+};
 
 //санк криетор для асинхронной операции -запрпашивает капчу с сервера и диспатчт санку которая этот урл записывает в стейт
-export const getCaptchaUrl = () => async(dispatch) =>{
+export const getCaptchaUrl = () => async(dispatch:any) =>{
    const response = await securityAPI.getCaptchaUrl();
    const captchaUrl = response.data.url;//получаем url капчи с сервера
    dispatch(getCaptchaUrlSuccess(captchaUrl));//диспатчим результат синхранной операции санки в стейт
-}
+};
 
 
 
 
-export const logout = () => async (dispatch) => {/*санк-криейтор для вылогинизации из соцсети*/
+export const logout = () => async (dispatch:any) => {/*санк-криейтор для вылогинизации из соцсети*/
    let response = await authAPI.logout();/*запрос на сервер на logout и запись зарезолвенного прописа в response*/
 /*в ответе (респонсе) от сервера сидят даннные*/
     if(response.data.resultCode === 0 ){/*если от сервера пришел ответ 0 значит успешен запрос*/
         dispatch(setAuthUserData(null,null,null,false));/*зануляем все поля с данныеми когда вылогиниваемся*/
     }
 
-}
+};
 
 
 export default authReducer;

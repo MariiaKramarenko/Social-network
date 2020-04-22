@@ -5,7 +5,7 @@ let initialState = {
       { id: 1, message: 'hi' },
       { id: 2, message: 'How is you project?' },
       { id: 3, message: 'Yep' }
-    ],
+    ]as Array <MessageType>,
     dialogs: [
       { id: 1, name: 'Mariya' },
       { id: 2, name: 'Arek' },
@@ -13,14 +13,30 @@ let initialState = {
       { id: 4, name: 'Kostiantym' },
       { id: 5, name: 'Anna' },
       { id: 6, name: 'Ekaterina' }
-    ]
+    ]as Array<DialogType>
 };
 
-const dialogsReducer = (state = initialState, action) => {/*передаем стейту его значение начальное!*/
+///////TYPES////////////////////////////////
+export type InitialStateType = typeof initialState;//тип для стейта
+
+type DialogType = {
+    id: number
+    name: string
+}
+type MessageType ={
+    id:number
+    message:string
+}
+
+type SendMessageCreatorActionType = {
+    type: typeof SEND_MESSAGE
+    newMessageBody: string
+}
+
+///////END OF TYPES/////////////////////////
+
+const dialogsReducer = (state = initialState, action:any):InitialStateType => {/*передаем стейту его значение начальное!*/
   /*редьюсер для диалогов, возвращает измененный стейт*/
-
-   
-
 	switch(action.type){/*свич-условие по кейсу action.type*/
         case SEND_MESSAGE:/*если action.type === SEND_MESSAGE то*/
          let body = action.newMessageBody;/*записываем в body значение введенного сообщения*/
@@ -34,7 +50,7 @@ const dialogsReducer = (state = initialState, action) => {/*передаем с�
 }
 }
 
-export const sendMessageCreator = (newMessageBody) =>({type:SEND_MESSAGE, newMessageBody})/*экшнкриэйтор для отправки сообщения*/
+export const sendMessageCreator = (newMessageBody:string):SendMessageCreatorActionType =>({type:SEND_MESSAGE, newMessageBody})/*экшнкриэйтор для отправки сообщения*/
 
 
 export default dialogsReducer;
