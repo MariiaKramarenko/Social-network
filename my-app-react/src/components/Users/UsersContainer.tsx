@@ -1,16 +1,36 @@
 import React from 'react';
-import Users from './Users.jsx';
+import Users from './Users';
 import {connect} from 'react-redux';
 import {follow, unfollow,setCurrentPage,toggleFollowingProgress, getUsers} from '../../redux/users-reducer';
-import Preloader from '../common/Preloader/Preloader.jsx';
+import Preloader from '../common/Preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import {getPageSize, getUsersAll, getTotalUsersCount, getCurrentPage, getIsFetching, getFollowingInProgress} from '../../redux/users-selectors';
-import {getUsersSuperSelector} from '../../redux/users-selectors.js';
+import {getUsersSuperSelector} from '../../redux/users-selectors';
+import {UserType} from "../../types/types";
+import {AppStateType} from "../../redux/redux-store";
+
+/////TYPES////////////////////////////////
+type PropsType={
+    currentPage:number
+    pageSize:number
+    isFetching:boolean
+    totalUsersCount:number
+    users: Array<UserType>
+    pageTitle:string
+    follow:()=> void
+    unfollow: ()=> void
+    followingInProgress: Array<number>
+    getUsers: (currentPage:number, pageSize:number)=> void
+
+}
 
 
 
-class UsersContainer extends React.Component {
+//////END OF TYPES///////////////////////
+
+//как типизировать классовую компоненту React.Component<PropsType>
+class UsersContainer extends React.Component<PropsType> {
 
   /*constructor (props) {
      super(props);} конструктор главной компоненты происходит по умолчанию*/
@@ -20,14 +40,15 @@ class UsersContainer extends React.Component {
     
     }
 
-    onPageChanged = (pageNumber) => {/*брем текущую страницу с сервера*/
+    onPageChanged = (pageNumber:number) => {/*брем текущую страницу с сервера*/
       this.props.getUsers(pageNumber, this.props.pageSize);
     
     }
 
     render () {
    return <div>
-                {this.props.isFetching ? <Preloader /> : null } 
+       {<h3>{this.props.pageTitle}</h3>}
+                {this.props.isFetching ? <Preloader /> : null }
 
                 <Users totalUsersCount={this.props.totalUsersCount} 
                  pageSize={this.props.pageSize}
@@ -55,7 +76,7 @@ class UsersContainer extends React.Component {
     /*поэтому в Users в пропсах будет сидеть users*/
 /*}*/
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state:AppStateType) => {//AppStateType-мы создали в redux-store -это глобальный типизированный стейт всего приложения
     return {
        //users: getUsersAll(state),
        users:getUsersSuperSelector(state),/*вызываем селектор,созданный с помощью reselect*/

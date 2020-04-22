@@ -51,7 +51,7 @@ catchAllUnhandledErrors = (reason, promise) => {//метод,отлавлива�
 
         <Route path='/dialogs'  render={withSuspense(DialogsContainer)} />
         
-        <Route path='/users' render={ () => <UsersContainer />} />
+        <Route path='/users' render={ () => <UsersContainer pageTitle={"React and Redux"}/>} />
         
         <Route path='/login' render={ () => <Login />} />
 

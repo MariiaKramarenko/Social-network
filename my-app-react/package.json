@@ -4,10 +4,12 @@
   "private": true,
   "homepage": "https://mariiakramarenko.github.io/Social-network",
   "dependencies": {
+    "@types/classnames": "^2.2.10",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.1",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "@types/react-redux": "^7.1.7",
     "@types/redux-form": "^8.2.3",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",

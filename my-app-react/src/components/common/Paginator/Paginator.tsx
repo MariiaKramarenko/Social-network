@@ -1,13 +1,30 @@
 import React, {useState} from 'react';
 import styles from "./Paginator.module.css";
-import cn from "classnames";
+import cn from "classnames";//npm install --save @types/classnames
+
+//////TYPES////////////////////////////////
+type PropsType={//типизация для пропсов
+    totalItemsCount:number
+    pageSize:number
+    currentPage:number
+    onPageChanged: (pageNumber:number)=> void
+    portionSize?: number //? означает что этот тип необязателен, так как он у нас захаркоджен на значение 10
+}
 
 
-let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
+
+
+///END OF TYPES///////////////////////////
+
+
+//типизируем компоненту,сначала пшем
+// :React.FC сразу после названия компоненты,
+// <Props> означает что она принимает пропсы типа Props кот мы описали выше как тип для пропсов
+let Paginator: React.FC<PropsType>= ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
 
     let pagesCount = Math.ceil(totalItemsCount / pageSize);//переменная с количеством страниц пользователей
 
-    let pages = [];//массив с пользователями
+    let pages:Array<number> = [];//массив с пользователями
     for (let i = 1; i <= pagesCount; i++) {//вывод пользователей через цикл for (увеличиваем каждую последующую страницу и пушим ее)
         pages.push(i);
     }

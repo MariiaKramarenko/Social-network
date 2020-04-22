@@ -7,6 +7,13 @@ import authReducer from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";/*Middleware импорт слоя для обработки санок*/
 import { reducer as formReducer} from "redux-form";/*импорт редьюсера для создания форм*/
 import appReducer from "./app-reducer";
+//////TYPES/////////////////////////
+//тип созданный на основе reducers (то есть тип глобального root reducer)
+type ReducersType = typeof reducers;//возвращает global state
+export type AppStateType = ReturnType<ReducersType>;//глобальный типизированный стейт всего приложения
+//то есть: мы как бы определяем то что возвращает глобальный редьюсер ReducersType
+
+////////////////////////////////////
 
 let reducers = combineReducers({/*это как бы наш стейт и каждый редьюсер для каждой странички*/
      profilePage: profileReducer,
@@ -19,10 +26,11 @@ let reducers = combineReducers({/*это как бы наш стейт и каж
      
 
 });/*функция склеивания/смешивания редьюсеров*/
-
+//@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers,  composeEnhancers(applyMiddleware(thunkMiddleware)));
 
-window.store = store;
+//@ts-ignore
+window.__store__ = store;
 
 export default store;
