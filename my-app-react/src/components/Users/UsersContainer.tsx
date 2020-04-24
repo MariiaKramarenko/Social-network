@@ -1,6 +1,6 @@
 import React from 'react';
 import Users from './Users';
-import {connect} from 'react-redux';
+import {connect, DefaultRootState} from 'react-redux';
 import {follow, unfollow,setCurrentPage,toggleFollowingProgress, getUsers} from '../../redux/users-reducer';
 import Preloader from '../common/Preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
@@ -11,21 +11,25 @@ import {UserType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";
 
 /////TYPES////////////////////////////////
-type PropsType={
+type OwPropsType={//типизация для пропсов (которые переданы через аттрбуты)
+    pageTitle:string
+}
+type MapStatePropsType={//типизация для пропсов (данных из стейта)
     currentPage:number
     pageSize:number
     isFetching:boolean
     totalUsersCount:number
     users: Array<UserType>
-    pageTitle:string
-    follow:()=> void
-    unfollow: ()=> void
     followingInProgress: Array<number>
+}
+type MapDispatchPropsType={//типизация для пропсов (колбеков)
+    follow:(userId:number)=> void
+    unfollow: (userId:number)=> void
     getUsers: (currentPage:number, pageSize:number)=> void
 
+
 }
-
-
+type PropsType= MapDispatchPropsType & MapStatePropsType & OwPropsType;//объединяем все наши пропсы в один общий объект
 
 //////END OF TYPES///////////////////////
 
@@ -46,8 +50,7 @@ class UsersContainer extends React.Component<PropsType> {
     }
 
     render () {
-   return <div>
-       {<h3>{this.props.pageTitle}</h3>}
+   return <div>{<h3>{this.props.pageTitle}</h3>}
                 {this.props.isFetching ? <Preloader /> : null }
 
                 <Users totalUsersCount={this.props.totalUsersCount} 
@@ -57,9 +60,7 @@ class UsersContainer extends React.Component<PropsType> {
                  users={this.props.users}
                  follow={this.props.follow}
                  unfollow={this.props.unfollow}
-                followingInProgress={this.props.followingInProgress}
-                 /> 
-                
+                followingInProgress={this.props.followingInProgress}/>
           </div>
           }
   }
@@ -76,7 +77,7 @@ class UsersContainer extends React.Component<PropsType> {
     /*поэтому в Users в пропсах будет сидеть users*/
 /*}*/
 
-let mapStateToProps = (state:AppStateType) => {//AppStateType-мы создали в redux-store -это глобальный типизированный стейт всего приложения
+let mapStateToProps = (state:AppStateType):MapStatePropsType => {//AppStateType-мы создали в redux-store -это глобальный типизированный стейт всего приложения
     return {
        //users: getUsersAll(state),
        users:getUsersSuperSelector(state),/*вызываем селектор,созданный с помощью reselect*/
@@ -89,17 +90,11 @@ let mapStateToProps = (state:AppStateType) => {//AppStateType-мы создал�
 }
 
 
-
+//<TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultRootState>
 export default  compose(
-  connect(mapStateToProps,{/*все это попадает в пропсы-коннтект создает пропсы и коллбеки данной компоненте*/
-        follow,
-        unfollow,
-        setCurrentPage,
-        toggleFollowingProgress,
-        getUsers
-    }),
- withAuthRedirect
-  )(UsersContainer);
+    //так connect отслеживает чтобы все что в нем прописано придерживалось четкой типизации указанных типов пропсов
+  connect<MapStatePropsType, MapDispatchPropsType, OwPropsType, AppStateType>(mapStateToProps,{/*все это попадает в пропсы-коннтект создает пропсы и коллбеки данной компоненте*/
+        follow, unfollow, getUsers}), withAuthRedirect)(UsersContainer);
 
 
 

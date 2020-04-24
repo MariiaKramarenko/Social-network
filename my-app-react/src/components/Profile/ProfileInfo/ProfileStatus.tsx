@@ -1,7 +1,17 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
+//////TYPES/////////////////////
+type PropsType ={
+    status: string
+    updateStatus: (status:string) => void
+}
+type StateType ={
+    editMode: boolean
+    status: string
+}
 
+////END OF TYPES///////////////
 
-class ProfileStatus extends React.Component {/*создаем класс*/
+class ProfileStatus extends React.Component<PropsType,StateType > {/*создаем класс*/
  
    state={/*локальный стейт для данной компоненты*/
    	 editMode:false,
@@ -19,7 +29,7 @@ class ProfileStatus extends React.Component {/*создаем класс*/
      });
      this.props.updateStatus(this.state.status);
      }
-    onStatusChange =(e)=>{
+    onStatusChange =(e: ChangeEvent<HTMLInputElement>)=>{//типизация для е - помним что это нативный элемент html
        this.setState ({
          status: e.currentTarget.value
        })
@@ -29,7 +39,7 @@ class ProfileStatus extends React.Component {/*создаем класс*/
    /*componentDidUpdate вызывается при каждом изменении стейта*/
 
    /*ВАЖНО: внутри componentDidUpdate все setState всегда должны быть внутри какого-то условия if*/
-   componentDidUpdate(prevProps, prevState){/*здесь мы должны вывести изменения стейта */
+   componentDidUpdate(prevProps:PropsType, prevState:StateType){/*здесь мы должны вывести изменения стейта */
     if(prevProps.status !== this.props.status){/*если изменился именно статус то делаем апдейт его*/
     this.setState({/*вызываем изменение локального стейта*/
       status: this.props.status/*заменяем статус текущий на тот что приходит из глобального стейта из пропсов*/
