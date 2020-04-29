@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d26bcd8-2539-4c60-9f19-8dcc908515cb" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/src/components/Profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/src/components/Profile/Profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/src/components/Profile/ProfileContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/src/components/Profile/ProfileContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/src/components/Users/User.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/src/components/Users/User.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/src/components/common/Paginator/Paginator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/src/components/common/Paginator/Paginator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/src/redux/app-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/src/redux/app-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/src/redux/profile-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/src/redux/profile-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app-react/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/src/types/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-app-react/src/redux/users-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/my-app-react/src/redux/users-reducer.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,7 +15,29 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="users-reducer.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/my-app-react/src/redux/users-reducer.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="155" column="170" selection-start-line="155" selection-start-column="170" selection-end-line="155" selection-end-column="170" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+                <element signature="n#!!block;n#FollowSuccessActionType#0" />
+                <element signature="n#!!block;n#UnfollowSuccessActionType#0" />
+                <element signature="n#!!block;n#SetUsersActionType#0" />
+                <element signature="n#!!block;n#SetCurrentPageActionType#0" />
+                <element signature="n#!!block;n#SetTotalUsersCountActionType#0" />
+                <element signature="n#!!block;n#ToggleIsFetchingActionType#0" />
+                <element signature="n#!!block;n#ToggleFollowingProgressActionType#0" />
+                <element signature="e#1283#1492#0" />
+                <element signature="e#1570#3385#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -35,7 +48,6 @@
         <option value="$PROJECT_DIR$/my-app-react/src/redux/auth-reducer.ts" />
         <option value="$PROJECT_DIR$/my-app-react/src/redux/dialogs-reducer.ts" />
         <option value="$PROJECT_DIR$/my-app-react/src/redux/redux-store.js" />
-        <option value="$PROJECT_DIR$/my-app-react/src/redux/users-reducer.ts" />
         <option value="$PROJECT_DIR$/my-app-react/src/redux/sidebar-reducer.ts" />
         <option value="$PROJECT_DIR$/my-app-react/src/components/common/Paginator/Paginator.jsx" />
         <option value="$PROJECT_DIR$/my-app-react/src/components/Users/UsersContainer.jsx" />
@@ -54,6 +66,7 @@
         <option value="$PROJECT_DIR$/my-app-react/src/redux/profile-reducer.ts" />
         <option value="$PROJECT_DIR$/my-app-react/src/components/Profile/Profile.tsx" />
         <option value="$PROJECT_DIR$/my-app-react/src/components/Profile/ProfileContainer.tsx" />
+        <option value="$PROJECT_DIR$/my-app-react/src/redux/users-reducer.ts" />
       </list>
     </option>
   </component>
@@ -220,12 +233,12 @@
       <workItem from="1587977841732" duration="5123000" />
       <workItem from="1587983140208" duration="1628000" />
       <workItem from="1587992009003" duration="4472000" />
-      <workItem from="1588144658222" duration="2691000" />
+      <workItem from="1588144658222" duration="7989000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59760000" />
+    <option name="totallyTimeSpent" value="65058000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -238,9 +251,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.04494382" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6447964" visible="true" weight="0.19568452" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6447964" weight="0.19568452" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32744783" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.3608631" side_tool="true" weight="0.18138042" />
@@ -541,13 +555,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my-app-react/src/redux/users-reducer.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/my-app-react/src/redux/sidebar-reducer.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -674,6 +681,25 @@
           <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-app-react/src/redux/users-reducer.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="155" column="170" selection-start-line="155" selection-start-column="170" selection-end-line="155" selection-end-column="170" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+            <element signature="n#!!block;n#FollowSuccessActionType#0" />
+            <element signature="n#!!block;n#UnfollowSuccessActionType#0" />
+            <element signature="n#!!block;n#SetUsersActionType#0" />
+            <element signature="n#!!block;n#SetCurrentPageActionType#0" />
+            <element signature="n#!!block;n#SetTotalUsersCountActionType#0" />
+            <element signature="n#!!block;n#ToggleIsFetchingActionType#0" />
+            <element signature="n#!!block;n#ToggleFollowingProgressActionType#0" />
+            <element signature="e#1283#1492#0" />
+            <element signature="e#1570#3385#0" />
           </folding>
         </state>
       </provider>
