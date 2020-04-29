@@ -117,7 +117,7 @@ export const followSuccess = (userID:number):FollowSuccessActionType => ( { type
 export const unfollowSuccess = (userID:number):UnfollowSuccessActionType => ( { type: UNFOLLOW, userID } )/*экшнкриейтор для удаления из друзей пользователя*/
 export const setUsers = (users: Array<UserType>):SetUsersActionType =>( {type: SET_USERS, users} )/*экшн установления юзеров*/
 export const setCurrentPage = (currentPage:number):SetCurrentPageActionType => ( {type:SET_CURRENT_PAGE, currentPage } )/*экшн кот меняет странички*/
-export const setTotalUsersCount = (totalUsersCount:number) => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount})
+export const setTotalUsersCount = (totalUsersCount:number):SetTotalUsersCountActionType => ({type: SET_TOTAL_USERS_COUNT, count:totalUsersCount})
 export const toggleIsFetching = (isFetching:boolean):ToggleIsFetchingActionType => ({type:TOGGLE_IS_FETCHING, isFetching})
 export const toggleFollowingProgress = (isFetching:boolean, userID:number):ToggleFollowingProgressActionType => ({type:TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID})
 

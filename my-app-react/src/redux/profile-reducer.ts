@@ -32,7 +32,7 @@ type SavePhotoSuceessActionType={
 /////END OF TYPES/////////////////////////
 
 
-export type InitialStateType= typeof initialState;//наследуемый тип всего стейта
+export type InitialStateType = typeof initialState;//наследуемый тип всего стейта
 
 let initialState = {/*инициализируемый стейт-то есть тот что передается при входе*/
     posts:[
@@ -40,8 +40,8 @@ let initialState = {/*инициализируемый стейт-то есть 
       {id:2, message:'Good day!', likesCount: 0 }
       ]as Array<PostType>, //воспринимай как массив обьектов типа PostType
     profile: null as ProfileType | null,
-    status: '',
-    newPostText: ''
+    status: " ",
+    newPostText: " "
 };
 
 
@@ -82,7 +82,7 @@ export const addPostActionCreator = (newPostText:string):AddPostActionCreatorAct
 export const setUserProfile = (profile:ProfileType):SetUserProfileActionType => ({type: SET_USER_PROFILE, profile})
 export const setStatus = (status:string):SetStatusActionType => ({type:SET_STATUS, status})/*экшнкриетор для установки статуса*/
 export const deletePost = (postId:number):DeletePostActionType =>({type:DELETE_POST, postId})//делаем actionCreator для TDD-test
-export const savePhotoSuceess = (photos:PhotosType) =>({type:SAVE_PHOTO_SUCCESS, photos})//делаем actionCreator для отпрвки аватра юзера
+export const savePhotoSuceess = (photos:PhotosType):SavePhotoSuceessActionType =>({type:SAVE_PHOTO_SUCCESS, photos})//делаем actionCreator для отпрвки аватра юзера
 
 
 

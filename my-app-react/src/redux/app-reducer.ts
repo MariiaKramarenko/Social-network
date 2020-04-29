@@ -18,10 +18,6 @@ type InitializedSuccessActionType ={
 
 
 
-
-
-
-
 let initialState:InitialStateType= {//типизация с помощью двоеточия :InitialStateType
     initialized: false//начальное значение инициализации
 };

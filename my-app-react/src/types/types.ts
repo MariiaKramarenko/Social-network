@@ -29,11 +29,11 @@ export type ProfileType={//тип для profile в стейте что имен
 
 }
 
-
 export type UserType ={//смотрим в API что сидит в данном объекте
     id: number
     name: string
     status: string
     photos: PhotosType
+    followed:boolean
 }
 

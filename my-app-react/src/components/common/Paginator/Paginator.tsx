@@ -54,7 +54,6 @@ return <nav aria-label="Page navigation example">
                                 { portionCount > portionNumber && //когда  тогда показываем кнопку NEXT-кот переключает на следующую порцию с пользователями
     <button className="btn-sm btn-primary" onClick={() => { setPortionNumber(portionNumber + 1) }}>NEXT</button> }
 
-
    </ul>
     </nav>
 
