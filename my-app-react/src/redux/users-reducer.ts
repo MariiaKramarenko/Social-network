@@ -51,7 +51,7 @@ type ToggleFollowingProgressActionType={
     isFetching:boolean
     userID:number
 }
-
+//общий тип для экшенов в редьюсерах
 type ActionTypes= FollowSuccessActionType | UnfollowSuccessActionType | SetUsersActionType | SetCurrentPageActionType |
     SetTotalUsersCountActionType | ToggleIsFetchingActionType | ToggleFollowingProgressActionType;//common type for all actions in this reducer
 

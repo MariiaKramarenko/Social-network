@@ -1,6 +1,9 @@
 import {usersAPI, profileAPI}from '../api/api';
 import {stopSubmit} from 'redux-form';
 import {PhotosType, PostType, ProfileType} from "../types/types";
+import {AppStateType} from "./redux-store";
+import {ThunkAction} from "redux-thunk";
+import {number} from "prop-types";
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
@@ -29,6 +32,8 @@ type SavePhotoSuceessActionType={
     type: typeof SAVE_PHOTO_SUCCESS
     photos:PhotosType
 }
+type ActionTypes = SavePhotoSuceessActionType | DeletePostActionType | SetStatusActionType | SetUserProfileActionType |AddPostActionCreatorActionType;
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>;
 /////END OF TYPES/////////////////////////
 
 
@@ -46,7 +51,7 @@ let initialState = {/*инициализируемый стейт-то есть 
 
 
 
-const profileReducer = (state = initialState , action:any):InitialStateType => {//возвращается объект типомкоторого является InitialStateType
+const profileReducer = (state = initialState , action:ActionTypes):InitialStateType => {//возвращается объект типомкоторого является InitialStateType
 	switch (action.type ){
      case ADD_POST:{
          let newPost = {
@@ -88,17 +93,19 @@ export const savePhotoSuceess = (photos:PhotosType):SavePhotoSuceessActionType =
 
 
 /*/////санк-криеторы///////////*/
-export const getUserProfile = (userID:number) => async (dispatch:any) =>{/*санккриейтор  возвращает санкудля получения профиля юзера*/
+export const getUserProfile = (userID:number):ThunkType => async (dispatch, getState) =>{/*санккриейтор  возвращает санкудля получения профиля юзера*/
           let response = await usersAPI.getProfile(userID);
            dispatch(setUserProfile(response.data));
 
 }
-export const getStatus = (userID:number) => async (dispatch:any) => {/*санккриетор для получения статуса юзера*/
+//thunk for getting status of user
+export const getStatus = (userID:number):ThunkType => async (dispatch, getState) => {/*санккриетор для получения статуса юзера*/
     let response = await profileAPI.getStatus(userID);/*обращаеся к апишке профайла и получаем статус с сервера*/
       dispatch(setStatus(response.data));/*сетаем полученный статус*/
   
 }
-export const updateStatus = (status:string) => async (dispatch:any) => {/*санккриетор для обновления статуса юзера*/
+//thunk for updating status of user
+export const updateStatus = (status:string):ThunkType => async (dispatch, getState) => {/*санккриетор для обновления статуса юзера*/
     try {
         let response = await profileAPI.updateStatus(status);/*обращаеся к апишке профайла*/
          if (response.data.resultCode === 0) {//если ответ сервера без ошибки
@@ -108,13 +115,15 @@ export const updateStatus = (status:string) => async (dispatch:any) => {/*сан
         //ловим ошибку от сервера тут должна быть логика
     }
 }/*диспатчим сет статус c переданным значением*/
-export const savePhoto = (file:any) => async (dispatch:any) => {/*санккриетор для отправки фотто юзера*/
+
+//thunk for sending photo on the server
+export const savePhoto = (file:any):ThunkType => async (dispatch, getState) => {/*санккриетор для отправки фотто юзера*/
     let response = await profileAPI.savePhoto(file);/*отправляем фото на сервер*/
       if(response.data.resultCode === 0){/*если ответ от сервера без ошибки то делаем диспатч фокти*/
       dispatch(savePhotoSuceess(response.data.data.photos));/*отправляем фотку на сервер */
-   
 }
 }
+
 //санк-криетор для отправки отредактированной информации профиля с помою формы кот их собирает на сервер
 export const saveProfile = (profile:ProfileType) => async (dispatch:any, getState:any) =>{
     const userId = getState().auth.userId;//достанем айди пользователя текущего которого данные мы изменили

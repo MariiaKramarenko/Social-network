@@ -1,5 +1,9 @@
 import {authAPI, securityAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
+import {AppStateType} from "./redux-store";
+import {ThunkAction} from "redux-thunk";
+import {FormAction} from "redux-form/lib/actions";
+
 
 //редьюсер авторизации в нашем приложении
 
@@ -25,6 +29,8 @@ type GetCaptchaUrlSuccessActionType ={
     type:typeof GET_CAPTCHA_URL_SUCCESS
     payload:{captchaUrl:string}
 }
+type ActionTypes = SetAuthUserDataActionType | GetCaptchaUrlSuccessActionType | FormAction;
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>;
 /////END OF TYPES/////////////////////////////////////////////
 
 
@@ -65,8 +71,8 @@ export const getCaptchaUrlSuccess= (captchaUrl:string):GetCaptchaUrlSuccessActio
 });
 
 
-
-export const getAuthUserData = () => async (dispatch:any) => {/*санк-криейтор для получения данных о залогиненном юзере*/
+//thunk for getting data of user
+export const getAuthUserData = ():ThunkType => async (dispatch) => {/*санк-криейтор для получения данных о залогиненном юзере*/
    /*помним что как результат работы асинхронной функции вернется промис*/
    let response = await authAPI.me();/*запрос на сервер на me, ожидаем промис с пом await*/
      /*присваиваем переменной rensponse тот response кот вернул нам await*/
@@ -79,8 +85,8 @@ export const getAuthUserData = () => async (dispatch:any) => {/*санк-кри�
 
 
 
-
-export const login = (email:string, password:string, rememberMe:boolean, captcha:string) => async (dispatch:any) => {/*санк-криейтор для получения данных для входа(логина)*/
+//thunk for login in App
+export const login = (email:string, password:string, rememberMe:boolean, captcha:string):ThunkType => async (dispatch) => {/*санк-криейтор для получения данных для входа(логина)*/
    /*!!!!!!!!!!!ВАЖНО: функция кот содержит await должна быть async!!!!!!!!!!*/
    let response = await authAPI.login(email, password, rememberMe, captcha);/*запрос на сервер на login и передаем данные для логинизации*/
     /*присваиваем переменной rensponse тот response кот вернул нам await*/
@@ -96,7 +102,6 @@ export const login = (email:string, password:string, rememberMe:boolean, captcha
     /*берем первое значение сообщения обошибке(приходит от сервера и на всякий случай ставим свою надпись об ошибке*/
     dispatch(stopSubmit("login", {_error: messages}));/*первое значение-какую форму мы останавливаем на проверку(_error-значение для всех полей общее),второй парам- объект с проверяемыми значениями(поля формы)*/
     }
-
 };
 
 //санк криетор для асинхронной операции -запрпашивает капчу с сервера и диспатчт санку которая этот урл записывает в стейт
